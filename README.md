@@ -34,7 +34,23 @@ Trên Windows, dùng `.\mvnw.cmd clean package` và `.\mvnw.cmd spring-boot:run`
 
 Mở `http://localhost:8080/`. Trang chủ trả HTTP 200 cho khách, dùng layout chung và có tiêu đề tab **TalentLink**.
 
-Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Flyway áp dụng các migration có trong `src/main/resources/db/migration`, còn Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
+Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Khi chạy trên database trống, Flyway chạy V1 trong `src/main/resources/db/migration` để tạo 13 bảng và V2 trong `src/main/resources/db/dev` để nạp dữ liệu giả lập. V2 được cấu hình riêng cho profile `dev`. Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
+
+### Tài khoản mẫu trên profile dev
+
+Mở `http://localhost:8080/login` và nhập email cùng mật khẩu mẫu `TalentLinkDev2026!`. MySQL lưu hash BCrypt có salt riêng cho từng tài khoản. Chỉ dùng bộ dữ liệu và mật khẩu mẫu trên database phát triển.
+
+| Vai trò | Email mẫu |
+| --- | --- |
+| Quản trị viên | `admin@talentlink.example` |
+| Đối tác tuyển dụng | `doitac01@talentlink.example`, `doitac02@talentlink.example`, `doitac03@talentlink.example` |
+| Sinh viên | Từ `sinhvien01@talentlink.example` đến `sinhvien15@talentlink.example` |
+
+V2 tạo một công ty cho mỗi đối tác, 15 hồ sơ sinh viên có học vấn, kỹ năng, dự án và chứng chỉ, cùng 30 kỹ năng trong danh mục. Bộ dữ liệu còn có các ví dụ về lịch sử duyệt, danh sách lưu, lời mời phỏng vấn, thông báo và lượt xem.
+
+Mỗi tài khoản được chuyển tới trang chủ theo quyền sau khi đăng nhập. `ADMIN` vào `/admin`, `PARTNER` vào `/partner`, và `STUDENT` vào `/me`. Ứng dụng ánh xạ `RECRUITER` và `CANDIDATE` trong MySQL thành quyền `PARTNER` và `STUDENT`.
+
+Tùy chọn **Giữ đăng nhập** có hiệu lực 14 ngày. Đặt biến môi trường `TALENTLINK_REMEMBER_ME_KEY` bằng một giá trị ngẫu nhiên riêng nếu cần giữ hiệu lực cookie qua lần khởi động lại. Khi biến này trống, Spring Security tạo khóa mới khi ứng dụng khởi động. Đăng xuất kết thúc phiên và xóa cookie ghi nhớ trong trình duyệt.
 
 ## Quy ước làm việc nhóm
 
@@ -59,7 +75,7 @@ Gọi fragment `fragments/layout :: page` với tiêu đề tab và phần nội
 </html>
 ```
 
-Đặt `successMessage`, `errorMessage` hoặc `infoMessage` trong model để dùng vùng thông báo. Sau khi chuyển hướng có thể đặt các giá trị này bằng `RedirectAttributes.addFlashAttribute`. Menu lấy vai trò và tên đăng nhập từ Spring Security. Khi thêm route bên dưới `/candidate`, `/recruiter` hoặc `/admin`, quy tắc bảo mật áp dụng theo vai trò tương ứng.
+Đặt `successMessage`, `errorMessage` hoặc `infoMessage` trong model để dùng vùng thông báo. Sau khi chuyển hướng có thể đặt các giá trị này bằng `RedirectAttributes.addFlashAttribute`. Menu lấy vai trò và email đăng nhập từ Spring Security. Khi thêm route bên dưới `/me`, `/partner` hoặc `/admin`, quy tắc bảo mật áp dụng theo vai trò tương ứng.
 
 ## Xử lý lỗi và thông báo flash
 

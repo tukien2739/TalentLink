@@ -6,13 +6,17 @@
     <h1 class="h2 mb-4" id="login-title">Đăng nhập</h1>
     <form th:action="@{/login}" method="post" class="d-grid gap-3">
         <div>
-            <label for="username" class="form-label">Tên đăng nhập</label>
-            <input class="form-control" id="username" name="username" autocomplete="username" required>
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control" id="email" name="email" type="email" autocomplete="username" required>
         </div>
         <div>
             <label for="password" class="form-label">Mật khẩu</label>
             <input class="form-control" id="password" name="password" type="password"
                    autocomplete="current-password" required>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox">
+            <label class="form-check-label" for="remember-me">Giữ đăng nhập</label>
         </div>
         <button class="btn btn-brand mt-1" type="submit">Đăng nhập</button>
     </form>
