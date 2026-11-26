@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wireframe TalentLink · T4E7920</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f2f0e9;
+      --card: #fffefb;
+      --ink: #202b2e;
+      --muted: #505d5e;
+      --line: #d2d8d4;
+      --soft: #edf1ed;
+      --accent: #24574f;
+      --tint: #e4eee8;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+    main { width: min(1160px, calc(100% - 48px)); margin: 0 auto; padding: 56px 0 76px; }
+    h1, h2, h3, h4, p { margin: 0; }
+    h1 { max-width: 18ch; font: 650 clamp(36px, 6vw, 62px)/1.04 Georgia, serif; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 22px; line-height: 1.2; }
+    h4 { font-size: 15px; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .intro { display: grid; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+    .intro p { color: var(--muted); max-width: 63ch; }
+    .contents { display: flex; flex-wrap: wrap; gap: 10px 20px; padding: 18px 0 6px; }
+    .board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; margin-top: 34px; }
+    .screen { min-width: 0; scroll-margin: 24px; }
+    .screen:target .canvas { border-color: var(--accent); }
+    .screen > header { min-height: 64px; padding-bottom: 12px; }
+    .stories { color: var(--muted); font-size: 13px; }
+    .canvas { min-height: 452px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); overflow: hidden; }
+    .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; background: var(--soft); border-bottom: 1px solid var(--line); padding: 12px 16px; }
+    .brand { font: bold 17px Georgia, serif; }
+    .bar nav, .actions, .chips, .tabs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .bar nav { gap: 12px; font-size: 12px; }
+    .panel { padding: 20px; display: grid; gap: 14px; align-content: start; }
+    .auth { max-width: 380px; margin: 0 auto; padding-top: 24px; }
+    .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .field { display: grid; min-width: 0; gap: 4px; }
+    label { font-size: 13px; font-weight: 650; }
+    input, textarea, select, button {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      padding: 7px 9px;
+      width: 100%;
+      min-width: 0;
+    }
+    input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+    textarea { resize: none; }
+    button, .button { width: auto; display: inline-flex; align-items: center; gap: 4px; padding: 7px 12px; border-radius: 6px; border: 1px solid var(--line); font-size: 13px; font-weight: 650; text-decoration: none; }
+    button:disabled { opacity: 1; }
+    .primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .badge, .chip { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; color: var(--muted); background: var(--soft); }
+    .badge { background: var(--tint); color: var(--accent); }
+    .help, small { font-size: 12px; color: var(--muted); }
+    .subhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .note, .box, .state { border-radius: 8px; padding: 10px 12px; border: 1px solid var(--line); background: var(--soft); }
+    .box { background: var(--card); display: grid; gap: 7px; }
+    .state { background: var(--tint); color: #28433c; font-size: 13px; }
+    .small-list { padding: 0; margin: 0; list-style: none; font-size: 13px; }
+    .small-list li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line); }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+    th { background: var(--soft); }
+    th, td { padding: 9px 7px; border-bottom: 1px solid var(--line); vertical-align: middle; overflow-wrap: anywhere; }
+    .tabs { font-size: 13px; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+    .tabs .current { color: var(--accent); font-weight: 700; }
+    .sample { font-size: 13px; }
+    @media (max-width: 850px) {
+      main { width: min(600px, calc(100% - 32px)); padding-top: 32px; }
+      .board { grid-template-columns: 1fr; gap: 24px; }
+      .canvas { min-height: 0; }
+    }
+    @media (max-width: 460px) {
+      .panel { padding: 16px 12px; }
+      .fields { grid-template-columns: 1fr; }
+      .bar { padding: 9px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header class="intro">
+    <p>TalentLink · T4E7920</p>
+    <h1>Wireframe các màn hình chính</h1>
+    <p>Mẫu tĩnh với dữ liệu minh họa. Các liên kết giữa màn hình giúp theo dõi luồng. <a href="user-stories.md">Xem user story và tiêu chí chấp nhận</a>.</p>
+  </header>
+  <nav class="contents" aria-label="Mục lục màn hình">
+    <a href="#dang-nhap">Đăng nhập</a>
+    <a href="#dang-ky">Đăng ký</a>
+    <a href="#ho-so">Hồ sơ của tôi</a>
+    <a href="#tai-khoan">Quản trị tài khoản</a>
+    <a href="#hang-cho">Hàng chờ duyệt</a>
+    <a href="#tim-ung-vien">Tìm ứng viên</a>
+    <a href="#chi-tiet">Chi tiết ứng viên</a>
+    <a href="#phong-van">Yêu cầu phỏng vấn</a>
+  </nav>
+
+  <div class="board">
+    <section class="screen" id="dang-nhap">
+      <header><h2>Đăng nhập</h2><p class="stories">UV-02 · NT-01 · QT-01</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><a href="#dang-ky">Tạo tài khoản</a></div>
+        <div class="panel auth">
+          <h3>Đăng nhập</h3>
+          <div class="field"><label for="signin-email">Email</label><input id="signin-email" type="email" placeholder="email@example.com" readonly></div>
+          <div class="field"><label for="signin-password">Mật khẩu</label><input id="signin-password" type="password" placeholder="Nhập mật khẩu" readonly></div>
+          <div class="actions"><button type="button" class="primary" disabled>Đăng nhập</button></div>
+          <p class="sample">Chưa có tài khoản? <a href="#dang-ky">Đăng ký</a></p>
+          <div class="note help">Sau khi đăng nhập <a href="#ho-so">Ứng viên</a> · <a href="#tim-ung-vien">Nhà tuyển dụng</a> · <a href="#tai-khoan">Quản trị viên</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="dang-ky">
+      <header><h2>Đăng ký</h2><p class="stories">UV-01</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><a href="#dang-nhap">Đăng nhập</a></div>
+        <div class="panel auth">
+          <h3>Tạo tài khoản ứng viên</h3>
+          <div class="field"><label for="signup-email">Email</label><input id="signup-email" type="email" placeholder="email@example.com" readonly></div>
+          <div class="field"><label for="signup-password">Mật khẩu</label><input id="signup-password" type="password" readonly></div>
+          <div class="field"><label for="signup-confirmation">Xác nhận mật khẩu</label><input id="signup-confirmation" type="password" readonly></div>
+          <div class="actions"><button type="button" class="primary" disabled>Tạo tài khoản</button></div>
+          <p class="sample">Đã có tài khoản? <a href="#dang-nhap">Đăng nhập</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="ho-so">
+      <header><h2>Hồ sơ của tôi</h2><p class="stories">UV-03 · UV-04 · UV-05 · UV-06</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><span class="chip">Ứng viên</span></div>
+        <div class="panel">
+          <div class="subhead"><h3>Hồ sơ của tôi</h3><span class="badge">Cần chỉnh sửa</span></div>
+          <p class="state"><strong>Phản hồi duyệt</strong> · Bổ sung vai trò của bạn trong dự án.</p>
+          <div class="fields">
+            <div class="field"><label for="profile-name">Họ và tên</label><input id="profile-name" value="Mai Anh" readonly></div>
+            <div class="field"><label for="profile-headline">Tiêu đề nghề nghiệp</label><input id="profile-headline" value="Lập trình viên Java" readonly></div>
+          </div>
+          <div class="field"><label for="profile-summary">Giới thiệu</label><textarea id="profile-summary" rows="2" readonly>Quan tâm đến phát triển ứng dụng web.</textarea></div>
+          <ul class="small-list">
+            <li><span>Học vấn · 1 mục</span><button type="button" disabled>Quản lý</button></li>
+            <li><span>Kỹ năng · Java 4/5</span><button type="button" disabled>Quản lý</button></li>
+            <li><span>Dự án · 1 mục</span><button type="button" disabled>Quản lý</button></li>
+            <li><span>Chứng chỉ · 0 mục</span><button type="button" disabled>Quản lý</button></li>
+          </ul>
+          <div class="actions"><button type="button" disabled>Lưu thay đổi</button><button type="button" class="primary" disabled>Gửi duyệt lại</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="tai-khoan">
+      <header><h2>Quản trị tài khoản</h2><p class="stories">QT-02 · QT-03</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><nav aria-label="Quản trị"><a href="#tai-khoan">Tài khoản</a><a href="#hang-cho">Hàng chờ duyệt</a></nav></div>
+        <div class="panel">
+          <h3>Tài khoản</h3>
+          <div class="field"><label for="account-email">Tìm theo email</label><input id="account-email" type="search" placeholder="Nhập email" readonly></div>
+          <div class="fields">
+            <div class="field"><label for="account-role">Vai trò</label><select id="account-role" disabled><option>Tất cả vai trò</option></select></div>
+            <div class="field"><label for="account-state">Trạng thái</label><select id="account-state" disabled><option>Tất cả trạng thái</option></select></div>
+          </div>
+          <div class="actions"><button type="button" class="primary" disabled>Lọc</button><button type="button" disabled>Xóa bộ lọc</button></div>
+          <div class="table-scroll">
+            <table aria-label="Kết quả tìm tài khoản">
+              <thead><tr><th scope="col">Email</th><th scope="col">Vai trò</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead>
+              <tbody>
+                <tr><td>mai@example.com</td><td>Ứng viên</td><td>Hoạt động</td><td><button type="button" disabled>Khóa</button></td></tr>
+                <tr><td>lan@example.com</td><td>Tuyển dụng</td><td>Đã khóa</td><td><button type="button" disabled>Mở khóa</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box sample">
+            <h4>Xác nhận khóa tài khoản</h4><p>Khóa mai@example.com?</p>
+            <div class="actions"><button type="button" disabled>Hủy</button><button type="button" class="primary" disabled>Xác nhận khóa</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="hang-cho">
+      <header><h2>Hàng chờ duyệt</h2><p class="stories">QT-04 · QT-05 · QT-06</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><nav aria-label="Quản trị"><a href="#tai-khoan">Tài khoản</a><a href="#hang-cho">Hàng chờ duyệt</a></nav></div>
+        <div class="panel">
+          <div class="subhead"><h3>Hồ sơ chờ duyệt</h3><span class="badge">Cũ nhất trước</span></div>
+          <div class="table-scroll">
+            <table aria-label="Hồ sơ đang chờ duyệt">
+              <thead><tr><th scope="col">Ứng viên</th><th scope="col">Thời điểm gửi</th><th scope="col">Thao tác</th></tr></thead>
+              <tbody>
+                <tr><td>Mai Anh</td><td>25/11 · 09:00</td><td><a href="#xem-ho-so-gui-duyet">Đang xem</a></td></tr>
+                <tr><td>Minh An</td><td>26/11 · 10:15</td><td><button type="button" disabled>Mở hồ sơ</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box sample" id="xem-ho-so-gui-duyet">
+            <h4>Hồ sơ gửi duyệt · Mai Anh</h4>
+            <p>Lập trình viên Java · Dự án quản lý ứng viên</p>
+            <div class="field"><label for="review-note">Ghi chú duyệt</label><textarea id="review-note" rows="2" placeholder="Bắt buộc khi yêu cầu sửa" readonly></textarea></div>
+            <div class="actions"><button type="button" class="primary" disabled>Duyệt</button><button type="button" disabled>Yêu cầu sửa</button></div>
+          </div>
+          <div class="note sample"><strong>Lịch sử duyệt</strong><br>24/11 · 16:20 · Quản trị Linh · Yêu cầu sửa<br><span class="help">Bổ sung vai trò của bạn trong dự án.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="tim-ung-vien">
+      <header><h2>Tìm ứng viên</h2><p class="stories">NT-02 · NT-04</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><nav aria-label="Tuyển dụng"><a href="#tim-ung-vien">Tìm ứng viên</a><a href="#da-luu">Đã lưu</a><a href="#da-gui">Yêu cầu đã gửi</a></nav></div>
+        <div class="panel">
+          <h3>Tìm ứng viên</h3>
+          <div class="field"><label for="candidate-query">Từ khóa</label><input id="candidate-query" type="search" value="Java" readonly></div>
+          <div class="fields">
+            <div class="field"><label for="candidate-skill">Kỹ năng</label><select id="candidate-skill" disabled><option>Java</option></select></div>
+            <div class="field"><label for="candidate-level">Mức tối thiểu</label><select id="candidate-level" disabled><option>3/5</option></select></div>
+          </div>
+          <div class="actions"><button type="button" class="primary" disabled>Tìm</button><button type="button" disabled>Xóa bộ lọc</button></div>
+          <article class="box sample">
+            <div class="subhead"><h4>Linh Đỗ</h4><span class="chip">Java 4/5</span></div>
+            <p>Lập trình viên Java</p><a href="#chi-tiet">Xem hồ sơ Linh Đỗ</a>
+          </article>
+          <div class="note sample" id="da-luu"><strong>Đã lưu</strong> · Ví dụ danh sách trống khi chưa lưu hồ sơ nào.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="chi-tiet">
+      <header><h2>Chi tiết ứng viên</h2><p class="stories">NT-03 · NT-04</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><a href="#tim-ung-vien">Quay lại kết quả</a></div>
+        <div class="panel">
+          <div class="subhead"><div><h3>Linh Đỗ</h3><p class="sample">Lập trình viên Java</p></div><span class="badge">Đã duyệt</span></div>
+          <div class="actions"><button type="button" disabled>Lưu ứng viên</button><a class="button primary" href="#phong-van">Yêu cầu phỏng vấn</a></div>
+          <div class="box sample"><h4>Giới thiệu</h4><p>Quan tâm đến phát triển ứng dụng web.</p></div>
+          <div class="box sample">
+            <h4>Kỹ năng</h4><div class="chips"><span class="chip">Java 4/5</span><span class="chip">MySQL 3/5</span></div>
+          </div>
+          <ul class="small-list">
+            <li><strong>Học vấn</strong><span>Công nghệ thông tin</span></li>
+            <li><strong>Dự án</strong><span>Ứng dụng quản lý ứng viên</span></li>
+            <li><strong>Chứng chỉ</strong><span>Chưa có</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="phong-van">
+      <header><h2>Yêu cầu phỏng vấn</h2><p class="stories">NT-05 · NT-06</p></header>
+      <div class="canvas">
+        <div class="bar"><span class="brand">TalentLink</span><a href="#chi-tiet">Quay lại hồ sơ</a></div>
+        <div class="panel">
+          <h3>Mời phỏng vấn · Linh Đỗ</h3>
+          <div class="tabs"><span class="current">Soạn yêu cầu</span><a href="#da-gui">Yêu cầu đã gửi</a></div>
+          <div class="field"><label for="interview-position">Vị trí</label><input id="interview-position" value="Java Developer" readonly></div>
+          <div class="field"><label for="interview-message">Lời nhắn</label><textarea id="interview-message" rows="2" readonly>Mời bạn trao đổi về vị trí Java Developer.</textarea></div>
+          <div class="field"><label for="interview-time">Thời gian đề xuất (tùy chọn)</label><input id="interview-time" placeholder="Ngày và giờ · UTC+07:00" readonly></div>
+          <div class="actions"><a class="button" href="#chi-tiet">Hủy</a><button type="button" class="primary" disabled>Gửi yêu cầu</button></div>
+          <div class="box sample" id="da-gui">
+            <h4>Yêu cầu đã gửi</h4>
+            <p>Linh Đỗ · Java Developer · <span class="badge">Chờ phản hồi</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>
