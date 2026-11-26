@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Đã xảy ra lỗi · TalentLink', ~{::#error-content})}">
+<body>
+<th:block id="error-content"
+          th:replace="~{fragments/error-message :: message('500', 'Đã xảy ra lỗi',
+          'TalentLink gặp sự cố khi xử lý yêu cầu. Vui lòng thử lại sau.')}"></th:block>
+</body>
+</html>

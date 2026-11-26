@@ -76,11 +76,23 @@ body {
     --bs-btn-focus-shadow-rgb: 20, 83, 77;
 }
 
-.auth-panel {
-    max-inline-size: 28rem;
+.auth-panel,
+.error-panel {
     border: 1px solid var(--tl-line);
     border-radius: 1rem;
     background: #fff;
+}
+
+.auth-panel {
+    max-inline-size: 28rem;
+}
+
+.error-panel {
+    max-inline-size: 36rem;
+}
+
+.error-code {
+    color: var(--tl-brand);
 }
 
 .site-footer {

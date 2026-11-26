@@ -1,18 +1,20 @@
 package com.example.talentlink.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String home(@RequestParam(name = "logout", required = false) String logout, Model model) {
-        if (logout != null) {
-            model.addAttribute("successMessage", "Bạn đã đăng xuất.");
-        }
+    public String home() {
         return "index";
+    }
+
+    @GetMapping(value = "/", params = "logout")
+    public String afterLogout(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("successMessage", "Bạn đã đăng xuất.");
+        return "redirect:/";
     }
 }

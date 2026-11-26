@@ -3,17 +3,21 @@ package com.example.talentlink.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class NavigationController {
 
     @GetMapping("/login")
-    public String login(@RequestParam(name = "error", required = false) String error, Model model) {
-        if (error != null) {
-            model.addAttribute("errorMessage", "Không thể đăng nhập. Hãy kiểm tra thông tin tài khoản.");
-        }
+    public String login() {
         return "login";
+    }
+
+    @GetMapping(value = "/login", params = "error")
+    public String afterFailedLogin(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage",
+                "Không thể đăng nhập. Hãy kiểm tra thông tin tài khoản.");
+        return "redirect:/login";
     }
 
     @GetMapping("/candidate")

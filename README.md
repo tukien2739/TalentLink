@@ -60,3 +60,9 @@ Gọi fragment `fragments/layout :: page` với tiêu đề tab và phần nội
 ```
 
 Đặt `successMessage`, `errorMessage` hoặc `infoMessage` trong model để dùng vùng thông báo. Sau khi chuyển hướng có thể đặt các giá trị này bằng `RedirectAttributes.addFlashAttribute`. Menu lấy vai trò và tên đăng nhập từ Spring Security. Khi thêm route bên dưới `/candidate`, `/recruiter` hoặc `/admin`, quy tắc bảo mật áp dụng theo vai trò tương ứng.
+
+## Xử lý lỗi và thông báo flash
+
+Dùng `BusinessRuleException` khi thao tác vi phạm quy tắc nghiệp vụ và `ResourceNotFoundException` khi bản ghi không tồn tại. `GlobalExceptionHandler` hiển thị trang tương ứng với HTTP 422, 404 hoặc 403 cho lỗi quyền truy cập. Spring Boot dùng các trang lỗi chung cho lỗi được chuyển qua `/error`, gồm lỗi 500. Nội dung trang lỗi dùng thông báo cố định dành cho người dùng.
+
+Khi một thao tác cần chuyển hướng, gọi `redirectAttributes.addFlashAttribute("successMessage", "Đã lưu thay đổi.")` hoặc dùng `errorMessage` cho lỗi, rồi trả về `redirect:` đến trang đích. Layout hiển thị thông báo ở lần mở trang đó. Đăng xuất và đăng nhập thất bại đã dùng cơ chế này.
