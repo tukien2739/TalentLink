@@ -1,0 +1,107 @@
+:root {
+    --tl-brand: #14534d;
+    --tl-brand-dark: #0c3834;
+    --tl-brand-soft: #edf6f2;
+    --tl-ink: #1e2b2a;
+    --tl-muted: #4d625f;
+    --tl-line: #dce8e4;
+}
+
+body {
+    color: var(--tl-ink);
+    background: #f7faf8;
+}
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--tl-line);
+}
+
+.brand {
+    color: var(--tl-brand-dark);
+    font-weight: 750;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    aspect-ratio: 1;
+    border-radius: .625rem;
+    background: var(--tl-brand);
+    color: #fff;
+    font-size: .875rem;
+    letter-spacing: .04em;
+}
+
+.site-header .nav-link {
+    color: var(--tl-muted);
+}
+
+.site-header .nav-link:hover,
+.site-header .nav-link:focus-visible {
+    color: var(--tl-brand-dark);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+}
+
+.account-name {
+    color: var(--tl-muted);
+    font-size: .875rem;
+    overflow-wrap: anywhere;
+}
+
+.btn-brand {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tl-brand);
+    --bs-btn-border-color: var(--tl-brand);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tl-brand-dark);
+    --bs-btn-hover-border-color: var(--tl-brand-dark);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tl-brand-dark);
+    --bs-btn-active-border-color: var(--tl-brand-dark);
+    --bs-btn-focus-shadow-rgb: 20, 83, 77;
+}
+
+.btn-outline-brand {
+    --bs-btn-color: var(--tl-brand-dark);
+    --bs-btn-border-color: var(--tl-line);
+    --bs-btn-hover-color: var(--tl-brand-dark);
+    --bs-btn-hover-bg: var(--tl-brand-soft);
+    --bs-btn-hover-border-color: var(--tl-brand);
+    --bs-btn-active-color: var(--tl-brand-dark);
+    --bs-btn-active-bg: var(--tl-brand-soft);
+    --bs-btn-active-border-color: var(--tl-brand);
+    --bs-btn-focus-shadow-rgb: 20, 83, 77;
+}
+
+.auth-panel {
+    max-inline-size: 28rem;
+    border: 1px solid var(--tl-line);
+    border-radius: 1rem;
+    background: #fff;
+}
+
+.site-footer {
+    border-top: 1px solid var(--tl-line);
+    color: var(--tl-muted);
+    background: var(--tl-brand-soft);
+}
+
+.skip-link {
+    position: absolute;
+    z-index: 1;
+    padding: .5rem 1rem;
+    background: #fff;
+    color: var(--tl-brand-dark);
+}
+
+@media (max-width: 767.98px) {
+    .account-actions {
+        align-items: flex-start;
+        border-top: 1px solid var(--tl-line);
+        margin-top: .5rem;
+        padding-block: .75rem .25rem;
+    }
+}

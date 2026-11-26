@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page(|${workspaceTitle} · TalentLink|, ~{::#workspace-content})}">
+<body>
+<section id="workspace-content">
+    <h1 class="h2" th:text="${workspaceTitle}"></h1>
+</section>
+</body>
+</html>
