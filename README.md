@@ -32,7 +32,7 @@ Từ thư mục gốc của dự án, chạy các lệnh sau để build và kh�
 
 Trên Windows, dùng `.\mvnw.cmd clean package` và `.\mvnw.cmd spring-boot:run`.
 
-Mở `http://localhost:8080/`. Trang chủ trả HTTP 200 cho khách, phần thân trống và tab có tiêu đề **TalentLink**.
+Mở `http://localhost:8080/`. Trang chủ trả HTTP 200 cho khách, dùng layout chung và có tiêu đề tab **TalentLink**.
 
 Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Flyway áp dụng các migration có trong `src/main/resources/db/migration`, còn Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
 
@@ -42,3 +42,21 @@ Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. F
 - Viết commit theo dạng `<loại>: <mã-task> <mô-tả>`. Dùng `feat` cho tính năng, `fix` cho sửa lỗi và `docs` cho tài liệu. Ví dụ `feat: T4E791F khởi tạo TalentLink`.
 - Mở PR từ nhánh feature vào `main`. Đặt mã task trong tiêu đề PR và điền kết quả kiểm tra theo [mẫu PR](.github/pull_request_template.md).
 - Mỗi PR vào `main` cần ít nhất một thành viên khác phê duyệt trước khi merge. Quy tắc bảo vệ `main` trên GitHub thực thi yêu cầu này.
+
+## Layout cho trang mới
+
+Gọi fragment `fragments/layout :: page` với tiêu đề tab và phần nội dung của trang. Header, footer, Bootstrap và vùng thông báo được lấy từ layout.
+
+```html
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Tiêu đề · TalentLink', ~{::#page-content})}">
+<body>
+<section id="page-content">
+    <h1>Tiêu đề trang</h1>
+</section>
+</body>
+</html>
+```
+
+Đặt `successMessage`, `errorMessage` hoặc `infoMessage` trong model để dùng vùng thông báo. Sau khi chuyển hướng có thể đặt các giá trị này bằng `RedirectAttributes.addFlashAttribute`. Menu lấy vai trò và tên đăng nhập từ Spring Security. Khi thêm route bên dưới `/candidate`, `/recruiter` hoặc `/admin`, quy tắc bảo mật áp dụng theo vai trò tương ứng.

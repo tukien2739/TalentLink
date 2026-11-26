@@ -15,8 +15,14 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers("/css/talentlink.css", "/webjars/bootstrap/**").permitAll()
+                        .requestMatchers("/candidate", "/candidate/**").hasRole("CANDIDATE")
+                        .requestMatchers("/recruiter", "/recruiter/**").hasRole("RECRUITER")
+                        .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
+                .formLogin(form -> form.loginPage("/login").permitAll())
                 .httpBasic(Customizer.withDefaults())
+                .logout(logout -> logout.logoutSuccessUrl("/?logout"))
                 .build();
     }
 }
