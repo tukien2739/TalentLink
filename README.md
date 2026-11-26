@@ -34,7 +34,19 @@ Trên Windows, dùng `.\mvnw.cmd clean package` và `.\mvnw.cmd spring-boot:run`
 
 Mở `http://localhost:8080/`. Trang chủ trả HTTP 200 cho khách, phần thân trống và tab có tiêu đề **TalentLink**.
 
-Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Flyway áp dụng các migration có trong `src/main/resources/db/migration`, còn Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
+Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Khi chạy trên database trống, Flyway chạy V1 trong `src/main/resources/db/migration` để tạo 13 bảng và V2 trong `src/main/resources/db/dev` để nạp dữ liệu giả lập. V2 được cấu hình riêng cho profile `dev`. Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
+
+### Tài khoản mẫu trên profile dev
+
+Các tài khoản dưới đây dùng HTTP Basic và cùng mật khẩu mẫu `TalentLinkDev2026!`. MySQL lưu hash BCrypt có salt riêng cho từng tài khoản. Chỉ dùng bộ dữ liệu và mật khẩu mẫu trên database phát triển.
+
+| Vai trò | Email mẫu |
+| --- | --- |
+| Quản trị viên | `admin@talentlink.example` |
+| Đối tác tuyển dụng | `doitac01@talentlink.example`, `doitac02@talentlink.example`, `doitac03@talentlink.example` |
+| Sinh viên | Từ `sinhvien01@talentlink.example` đến `sinhvien15@talentlink.example` |
+
+V2 tạo một công ty cho mỗi đối tác, 15 hồ sơ sinh viên có học vấn, kỹ năng, dự án và chứng chỉ, cùng 30 kỹ năng trong danh mục. Bộ dữ liệu còn có các ví dụ về lịch sử duyệt, danh sách lưu, lời mời phỏng vấn, thông báo và lượt xem.
 
 ## Quy ước làm việc nhóm
 
