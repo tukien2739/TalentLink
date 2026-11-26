@@ -16,11 +16,11 @@
             <div class="collapse navbar-collapse" id="site-nav">
                 <ul class="navbar-nav me-auto gap-md-2">
                     <li class="nav-item"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
-                    <li class="nav-item" sec:authorize="hasRole('CANDIDATE')">
-                        <a class="nav-link" th:href="@{/candidate}">Khu vực ứng viên</a>
+                    <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                        <a class="nav-link" th:href="@{/me}">Khu vực sinh viên</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasRole('RECRUITER')">
-                        <a class="nav-link" th:href="@{/recruiter}">Khu vực tuyển dụng</a>
+                    <li class="nav-item" sec:authorize="hasRole('PARTNER')">
+                        <a class="nav-link" th:href="@{/partner}">Khu vực đối tác tuyển dụng</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/admin}">Khu vực quản trị</a>
