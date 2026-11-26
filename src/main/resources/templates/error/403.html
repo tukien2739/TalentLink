@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Không có quyền truy cập · TalentLink', ~{::#error-content})}">
+<body>
+<th:block id="error-content"
+          th:replace="~{fragments/error-message :: message('403', 'Không có quyền truy cập',
+          'Bạn không có quyền mở trang này. Nếu cần quyền truy cập, hãy liên hệ quản trị viên.')}"></th:block>
+</body>
+</html>
