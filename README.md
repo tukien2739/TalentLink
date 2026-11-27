@@ -77,7 +77,9 @@ Migration V3 bổ sung `profiles.visibility` với giá trị mặc định `PRI
 
 Sau khi đăng nhập, chọn **Đổi mật khẩu** trên thanh điều hướng. Cần nhập đúng mật khẩu hiện tại. Sau khi đổi, ứng dụng kết thúc phiên hiện tại và yêu cầu đăng nhập lại.
 
-Trên profile `dev`, chọn **Quên mật khẩu?** ở trang đăng nhập, nhập email rồi tìm dòng `Dev password reset OTP` trong log của ứng dụng. Nhập mã sáu số và mật khẩu mới ở trang đặt lại. Migration V4 lưu hash của OTP trong MySQL. Mã hết hạn sau 10 phút, bị hủy sau 5 lần nhập sai và chỉ dùng được một lần. Có thể yêu cầu mã mới sau 60 giây. Thông báo gửi mã giống nhau cho mọi email. Luồng này ghi OTP vào log phát triển và chỉ được bật trên profile `dev`.
+Đặt lại mật khẩu cục bộ mặc định tắt. Dùng DB dữ liệu giả trên máy cá nhân, bind HTTP vào `127.0.0.1`, và thêm profile `otp-local` bên cạnh `dev`. Tạo thư mục nằm ngoài repo bằng `mktemp -d`, xác nhận quyền `0700` và truyền đường dẫn qua `TALENTLINK_OTP_LOCAL_DIRECTORY`. Không bật profile này trên môi trường dùng chung hoặc thông qua proxy/tunnel.
+
+Tại trang đăng nhập, chọn **Quên mật khẩu?** và gửi yêu cầu. Lấy mã từ tệp `reset-*.otp` mới trong thư mục riêng. Ứng dụng tạo tệp với quyền `0600` và chỉ ghi mã, không ghi email. Xóa tệp sau khi đọc và xóa thư mục thử khi kết thúc. Migration V4 lưu hash của OTP. Mã hết hạn sau 10 phút, bị chặn sau 5 lần nhập sai, chỉ dùng được một lần và có thể yêu cầu lại sau 60 giây. Môi trường triển khai cần kênh giao mã riêng trước khi mở tính năng.
 
 ### Quản trị tài khoản
 

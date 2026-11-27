@@ -19,7 +19,7 @@
             <label class="form-check-label" for="remember-me">Giữ đăng nhập</label>
         </div>
         <button class="btn btn-brand mt-1" type="submit">Đăng nhập</button>
-        <p class="small mb-0" th:if="${@environment.matchesProfiles('dev')}">
+        <p class="small mb-0" th:if="${passwordRecoveryEnabled}">
             <a th:href="@{/forgot-password}">Quên mật khẩu?</a>
         </p>
         <p class="small mb-0">Chưa có tài khoản? <a th:href="@{/register}">Đăng ký sinh viên</a></p>

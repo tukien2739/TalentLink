@@ -2,6 +2,7 @@ package com.example.talentlink.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class NavigationController {
 
+    private final ObjectProvider<PasswordRecoveryController> recovery;
+
+    public NavigationController(ObjectProvider<PasswordRecoveryController> recovery) {
+        this.recovery = recovery;
+    }
+
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("passwordRecoveryEnabled", recovery.getIfAvailable() != null);
         return "login";
     }
 

@@ -4,7 +4,7 @@ Mở task riêng khi điều phối chốt phạm vi và người phụ trách. 
 
 | Thứ tự | Phạm vi task | Điều kiện hoàn thành |
 |---|---|---|
-| P0 trước khi dùng reset ngoài dev | SEC-01, cách ly dev và thiết kế giao mã | Kiểm tra profile, dữ liệu thử, log, vòng đời và giới hạn mã. |
+| Đã xử lý trên Sprint 2 | SEC-01, bỏ OTP và email khỏi log. Reset local cần opt-in, loopback và hộp thư riêng. | Regression kiểm tra quyền tệp, đầu ra log và vòng đời OTP. Giao mã ngoài local cần task riêng trước khi mở tính năng ở môi trường đó. |
 | P0 trước triển khai có HTTP/2 | DEP-01, rà soát ingress, vá dependency riêng | Có phiên bản đã đối chiếu advisory và kết quả regression sau cập nhật. |
 | P1 | SEC-02, vòng đời phiên tài khoản | Có chính sách thu hồi và test phiên đang mở, remember-me và khóa tài khoản. |
 | P1 | SEC-03, kiểm soát tài nguyên avatar | Kiểm tra giới hạn ảnh và định dạng hợp lệ. |
@@ -13,4 +13,4 @@ Mở task riêng khi điều phối chốt phạm vi và người phụ trách. 
 | P2 | PERF-01 | Có số liệu truy vấn, tải và thống nhất ngưỡng trước khi chọn thay đổi. |
 | P2 | ARC-01, UX-01 | Điều chỉnh khi chạm đúng capability, giữ hợp đồng HTTP và kiểm tra hai profile đăng nhập. |
 
-Lịch rà soát phụ thuộc theo [tiêu chuẩn bảo mật](SECURITY_STANDARDS.md) cần dựa trên artifact thực tế. Đợt audit giữ các thay đổi khắc phục ở backlog.
+Lịch rà soát phụ thuộc theo [tiêu chuẩn bảo mật](SECURITY_STANDARDS.md) cần dựa trên artifact thực tế. Các mục chưa đóng tiếp tục được theo dõi trong backlog.

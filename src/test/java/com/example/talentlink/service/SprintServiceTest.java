@@ -95,6 +95,54 @@ class SprintServiceTest {
     }
 
     @Test
+    void resetConsumesCodeAndRejectsReuse() throws Exception {
+        stubAccount();
+        var codeLookup = resetCodeLookup();
+        when(codeLookup.optional()).thenReturn(Optional.of("otp-hash"), Optional.empty());
+        when(encoder.matches("736294", "otp-hash")).thenReturn(true);
+        when(encoder.encode("fixture-password")).thenReturn("new-hash");
+        var update = jdbc.sql(contains("UPDATE users SET password_hash"))
+                .param("id", USER_ID).param("hash", "new-hash");
+        var delete = jdbc.sql(contains("DELETE FROM password_reset_codes")).param("id", USER_ID);
+        var passwords = new AccountPasswordService(jdbc, encoder);
+
+        assertTrue(passwords.reset(EMAIL, "736294", "fixture-password"));
+        assertFalse(passwords.reset(EMAIL, "736294", "fixture-password"));
+
+        verify(update).update();
+        verify(delete).update();
+    }
+
+    @Test
+    void wrongCodeIncrementsAttemptsWithoutChangingPassword() throws Exception {
+        stubAccount();
+        when(resetCodeLookup().optional()).thenReturn(Optional.of("otp-hash"));
+        var attempts = jdbc.sql(contains("failed_attempts = failed_attempts + 1")).param("id", USER_ID);
+
+        assertFalse(new AccountPasswordService(jdbc, encoder).reset(EMAIL, "111111", "fixture-password"));
+
+        verify(attempts).update();
+        verify(jdbc, never()).sql(contains("UPDATE users"));
+    }
+
+    @Test
+    void expiredCodeIsExcludedAndLeavesPasswordUnchanged() throws Exception {
+        stubAccount();
+        when(resetCodeLookup().optional()).thenReturn(Optional.empty());
+
+        assertFalse(new AccountPasswordService(jdbc, encoder).reset(EMAIL, "736294", "fixture-password"));
+
+        verifyNoInteractions(encoder);
+        verify(jdbc, never()).sql(contains("UPDATE users"));
+    }
+
+    private JdbcClient.MappedQuerySpec<String> resetCodeLookup() {
+        return jdbc.sql(argThat(sql -> sql != null && sql.contains("expires_at > UTC_TIMESTAMP(6)")
+                        && sql.contains("failed_attempts < :maxAttempts")))
+                .param("id", USER_ID).param("maxAttempts", 5).query(String.class);
+    }
+
+    @Test
     void updatingMissingProfileRaisesNotFound() {
         var form = new StudentProfileForm("Student Name", null, null, null, null, null);
         var update = jdbc.sql(contains("UPDATE profiles")).param("email", EMAIL)
