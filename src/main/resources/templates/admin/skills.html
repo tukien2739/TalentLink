@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Quản trị kỹ năng · TalentLink', ~{::#skills-content})}">
+<body>
+<section id="skills-content">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+        <h1 class="h2 mb-0">Quản trị danh mục kỹ năng</h1>
+        <a class="btn btn-brand" th:href="@{/admin/skills/new}">Thêm kỹ năng</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+            <tr>
+                <th scope="col">Tên kỹ năng</th>
+                <th scope="col">Nhóm</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${skills.isEmpty()}"><td colspan="4">Chưa có kỹ năng.</td></tr>
+            <tr th:each="skill : ${skills}">
+                <th scope="row" th:text="${skill.name}"></th>
+                <td th:text="${skill.category.label}"></td>
+                <td th:text="${skill.hidden ? 'Đã ẩn' : 'Hiển thị'}"></td>
+                <td>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-sm btn-outline-brand" th:href="@{/admin/skills/{id}/edit(id=${skill.id})}">Sửa</a>
+                        <form th:unless="${skill.hidden}" th:action="@{/admin/skills/{id}/hide(id=${skill.id})}" method="post">
+                            <button class="btn btn-sm btn-outline-brand" type="submit">Ẩn</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

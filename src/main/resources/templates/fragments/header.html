@@ -25,6 +25,9 @@
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/admin/users}">Quản trị tài khoản</a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/skills}">Quản trị kỹ năng</a>
+                    </li>
                 </ul>
                 <div class="account-actions d-flex align-items-md-center flex-column flex-md-row gap-2 gap-md-3">
                     <a class="btn btn-outline-brand" th:href="@{/register}" sec:authorize="isAnonymous()">Đăng ký</a>
