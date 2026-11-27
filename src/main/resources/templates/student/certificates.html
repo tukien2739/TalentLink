@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Chứng chỉ · TalentLink', ~{::#certificates-content})}">
+<body>
+<section id="certificates-content" class="col-lg-9 mx-auto">
+    <a th:if="${admin}" th:href="@{/admin/users}">Quản trị tài khoản</a>
+    <a th:unless="${admin}" th:href="@{/me/profile}">Hồ sơ của tôi</a>
+    <h1 class="h2 my-3">Chứng chỉ</h1>
+    <p th:if="${certificates.isEmpty()}">Chưa có chứng chỉ.</p>
+    <article th:each="certificate : ${certificates}" class="card p-3 mb-3 text-break">
+        <h2 class="h5" th:text="${certificate.name}"></h2>
+        <p class="mb-2">
+            <span th:text="${certificate.issuer}"></span> ·
+            <time th:text="${certificate.issuedOn}"></time>
+        </p>
+        <p th:if="${admin}" th:text="${certificate.email}"></p>
+        <div class="d-flex flex-wrap gap-2">
+            <a th:if="${certificate.evidenceKey != null}" class="btn btn-outline-secondary btn-sm"
+               th:href="${admin} ? @{/admin/certificates/{id}/evidence(id=${certificate.id},inline=true)} : @{/me/profile/certificates/{id}/evidence(id=${certificate.id},inline=true)}">Xem minh chứng</a>
+            <a th:if="${certificate.evidenceKey != null}" class="btn btn-outline-primary btn-sm"
+               th:href="${admin} ? @{/admin/certificates/{id}/evidence(id=${certificate.id})} : @{/me/profile/certificates/{id}/evidence(id=${certificate.id})}">Tải minh chứng</a>
+            <form th:unless="${admin}" method="post"
+                  th:action="@{/me/profile/certificates/{id}/remove(id=${certificate.id})}">
+                <button class="btn btn-outline-danger btn-sm" type="submit">Xoá chứng chỉ</button>
+            </form>
+        </div>
+    </article>
+    <form th:unless="${admin}" class="card p-3 mt-4" method="post" enctype="multipart/form-data"
+          th:action="@{/me/profile/certificates}" th:object="${certificateForm}">
+        <h2 class="h5">Thêm chứng chỉ</h2>
+        <div class="mb-3">
+            <label for="name" class="form-label">Tên chứng chỉ</label>
+            <input class="form-control" type="text" th:field="*{name}" maxlength="200" required>
+            <div class="text-danger" th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="issuer" class="form-label">Đơn vị cấp</label>
+            <input class="form-control" type="text" th:field="*{issuer}" maxlength="200" required>
+            <div class="text-danger" th:errors="*{issuer}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="issuedOn" class="form-label">Ngày cấp</label>
+            <input class="form-control" type="date" th:field="*{issuedOn}" required>
+            <div class="text-danger" th:errors="*{issuedOn}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="evidence" class="form-label">File minh chứng</label>
+            <input class="form-control" type="file" id="evidence" name="evidence"
+                   accept=".pdf,.jpg,.jpeg,.png" aria-describedby="evidence-help" required>
+            <div id="evidence-help" class="form-text">PDF, JPG hoặc PNG, tối đa 5 MB.</div>
+            <div class="text-danger" th:errors="*{evidence}"></div>
+            <div class="text-danger" th:if="${evidenceError}" th:text="${evidenceError}"></div>
+        </div>
+        <div><button class="btn btn-primary" type="submit">Thêm chứng chỉ</button></div>
+    </form>
+</section>
+</body>
+</html>

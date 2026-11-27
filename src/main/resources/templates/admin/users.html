@@ -9,6 +9,7 @@
             <p class="text-body-secondary mb-0" th:text="|${accounts.total} tài khoản|"></p>
         </div>
         <a class="btn btn-brand" th:href="@{/admin/users/new}">Tạo tài khoản đối tác</a>
+        <a class="btn btn-outline-secondary" th:href="@{/admin/certificates}">Minh chứng chứng chỉ</a>
     </div>
     <form class="card p-3 mb-4" th:action="@{/admin/users}" method="get" aria-label="Tìm và lọc tài khoản">
         <div class="row g-3 align-items-end">

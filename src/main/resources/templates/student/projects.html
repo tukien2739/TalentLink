@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Dự án cá nhân · TalentLink', ~{::#projects-content})}">
+<body>
+<section id="projects-content" class="col-lg-9 mx-auto" aria-labelledby="projects-title">
+    <a th:href="@{/me/profile}">Hồ sơ của tôi</a>
+    <h1 class="h2 my-3" id="projects-title">Dự án cá nhân</h1>
+    <p th:if="${projects.isEmpty()}">Bạn chưa thêm dự án.</p>
+    <article th:each="project : ${projects}" class="card p-3 mb-3 text-break">
+        <h2 class="h5" th:text="${project.name}"></h2>
+        <dl class="mb-2">
+            <dt>Vai trò</dt>
+            <dd th:text="${project.projectRole}"></dd>
+            <dt>Công nghệ dùng</dt>
+            <dd th:text="${project.technologies}"></dd>
+            <dt>Mô tả</dt>
+            <dd th:text="${project.description}" style="white-space: pre-wrap"></dd>
+        </dl>
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+            <a th:if="${project.hasGithubLink()}" th:href="${project.githubUrl}" target="_blank"
+               rel="noopener noreferrer">GitHub (tab mới)</a>
+            <a th:if="${project.hasDemoLink()}" th:href="${project.demoUrl}" target="_blank"
+               rel="noopener noreferrer">Demo (tab mới)</a>
+            <a class="btn btn-outline-secondary btn-sm" th:href="@{/me/profile/projects/{id}/edit(id=${project.id})}">Sửa</a>
+            <form th:action="@{/me/profile/projects/{id}/remove(id=${project.id})}" method="post">
+                <button class="btn btn-outline-danger btn-sm" type="submit"
+                        th:attr="aria-label=|Xoá dự án ${project.name}|">Xoá</button>
+            </form>
+        </div>
+    </article>
+    <form class="card p-3 p-md-4" th:object="${projectForm}" method="post" novalidate
+          th:action="${projectId == null} ? @{/me/profile/projects} : @{/me/profile/projects/{id}/edit(id=${projectId})}">
+        <h2 class="h5" th:text="${projectId == null} ? 'Thêm dự án' : 'Sửa dự án'"></h2>
+        <p class="text-danger" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+        <div class="mb-3">
+            <label class="form-label" for="name">Tên dự án</label>
+            <input type="text" class="form-control" th:field="*{name}" th:errorclass="is-invalid"
+                   maxlength="200" aria-describedby="name-error" required>
+            <div class="invalid-feedback" id="name-error" th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="projectRole">Vai trò</label>
+            <input type="text" class="form-control" th:field="*{projectRole}" th:errorclass="is-invalid"
+                   maxlength="200" aria-describedby="projectRole-error" required>
+            <div class="invalid-feedback" id="projectRole-error" th:errors="*{projectRole}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="technologies">Công nghệ dùng</label>
+            <input type="text" class="form-control" th:field="*{technologies}" th:errorclass="is-invalid"
+                   maxlength="500" aria-describedby="technologies-error" required>
+            <div class="invalid-feedback" id="technologies-error" th:errors="*{technologies}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="githubUrl">Link GitHub</label>
+            <input type="url" class="form-control" th:field="*{githubUrl}" th:errorclass="is-invalid"
+                   maxlength="2048" aria-describedby="githubUrl-error" required>
+            <div class="invalid-feedback" id="githubUrl-error" th:errors="*{githubUrl}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="demoUrl">Link demo (tuỳ chọn)</label>
+            <input type="url" class="form-control" th:field="*{demoUrl}" th:errorclass="is-invalid"
+                   maxlength="2048" aria-describedby="demoUrl-error">
+            <div class="invalid-feedback" id="demoUrl-error" th:errors="*{demoUrl}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="description">Mô tả</label>
+            <textarea rows="4" class="form-control" th:field="*{description}" th:errorclass="is-invalid"
+                   maxlength="16000" aria-describedby="description-error" required></textarea>
+            <div class="invalid-feedback" id="description-error" th:errors="*{description}"></div>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-brand" type="submit">Lưu dự án</button>
+            <a class="btn btn-outline-secondary" th:if="${projectId != null}" th:href="@{/me/profile/projects}">Huỷ</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>
