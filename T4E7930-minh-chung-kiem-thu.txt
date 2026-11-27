@@ -1,0 +1,36 @@
+MINH CHỨNG KIỂM THỬ SPRINT 1
+Task T4E7930 · TalentLink
+
+Lệnh chạy
+mvn -o -Daether.syncContext.named.factory=noop test
+
+Kết quả Maven
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.921 s -- in com.example.talentlink.controller.SprintMvcTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.111 s -- in com.example.talentlink.service.SprintServiceTest
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+Finished at: 2026-11-27T14:03:17+07:00
+
+SprintMvcTest
+  ĐẠT  anonymousUserMustLogIn(String)[1]
+  ĐẠT  anonymousUserMustLogIn(String)[2]
+  ĐẠT  anonymousUserMustLogIn(String)[3]
+  ĐẠT  studentLoginRedirectsToProfile
+  ĐẠT  invalidRegistrationShowsFieldErrors
+  ĐẠT  wrongPasswordReturnsToLogin
+  ĐẠT  studentCannotOpenOtherRolePages(String)[1]
+  ĐẠT  studentCannotOpenOtherRolePages(String)[2]
+  ĐẠT  registrationWithoutCsrfIsForbidden
+
+SprintServiceTest
+  ĐẠT  incorrectCurrentPasswordPreventsUpdate
+  ĐẠT  updatingMissingProfileRaisesNotFound
+  ĐẠT  missingAccountPreventsPasswordChange
+  ĐẠT  passwordChangeStoresNewHashAndClearsResetCode
+  ĐẠT  registrationStoresEncodedPasswordAndCreatesPrivateProfile
+  ĐẠT  duplicateEmailPreventsProfileCreation
+
+Phạm vi còn thiếu
+Học vấn và kỹ năng hiện có schema và dữ liệu mẫu. Unit test cho hai service còn thiếu.
+
+Nguồn số liệu là báo cáo Maven Surefire trong target/surefire-reports.
