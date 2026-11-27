@@ -24,6 +24,11 @@ public class SkillRepository {
                 .query(Skill.class).list();
     }
 
+    public List<Skill> findVisible() {
+        return jdbc.sql("SELECT id, name, category, hidden FROM skills WHERE hidden = FALSE ORDER BY name")
+                .query(Skill.class).list();
+    }
+
     public Optional<Skill> findById(long id) {
         return jdbc.sql("SELECT id, name, category, hidden FROM skills WHERE id = :id")
                 .param("id", id).query(Skill.class).optional();
