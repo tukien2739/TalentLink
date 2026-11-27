@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TalentLink dev" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.example.talentlink.TalentLinkApplication" />
+    <module name="talentlink" />
+    <option name="VM_PARAMETERS" value="-Dspring.config.import=file:./.talentlink-dev.properties -Dserver.address=127.0.0.1" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <envs>
+      <env name="SPRING_PROFILES_ACTIVE" value="dev" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

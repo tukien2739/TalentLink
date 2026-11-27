@@ -38,3 +38,6 @@ build/
 ### Mac OS ###
 .DS_Store
 /uploads/
+
+# Worktree-local TalentLink database settings
+/.talentlink-dev.properties

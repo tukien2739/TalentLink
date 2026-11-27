@@ -36,6 +36,21 @@ Mở `http://localhost:8080/`. Trang chủ trả HTTP 200 cho khách, dùng layo
 
 Profile `dev` lấy cấu hình kết nối từ `application-dev.properties`. Khi chạy trên database trống, Flyway chạy V1 trong `src/main/resources/db/migration` để tạo 13 bảng và V2 trong `src/main/resources/db/dev` để nạp dữ liệu giả lập. V2 được cấu hình riêng cho profile `dev`. Hibernate kiểm tra schema khi khởi động với `ddl-auto=validate`.
 
+### Chạy trực tiếp từ IntelliJ IDEA
+
+Mở đúng thư mục worktree, import Maven từ `pom.xml` và chọn Project SDK 17. Cấu hình **TalentLink dev** trong `.run/` chạy lớp `TalentLinkApplication` với profile `dev` và dùng thư mục gốc của worktree làm thư mục làm việc.
+
+Trong mỗi worktree, tạo tệp `.talentlink-dev.properties` ở thư mục gốc. Tệp đã được Git bỏ qua. Điền thông tin của tài khoản MySQL local có quyền trên schema phát triển riêng của worktree và giới hạn quyền đọc tệp, ví dụ `chmod 600 .talentlink-dev.properties` trên macOS/Linux.
+
+```properties
+DB_URL=jdbc:mysql://127.0.0.1:3306/talentlink_worktree_dev
+DB_USERNAME=your-local-user
+DB_PASSWORD=
+server.port=8081
+```
+
+Điền mật khẩu local sau dấu `=` nếu tài khoản yêu cầu. Đặt `server.port` khác nhau nếu chạy nhiều worktree đồng thời. Chọn **TalentLink dev** trên thanh công cụ IntelliJ rồi bấm **Run** hoặc **Debug**. Mở `http://127.0.0.1:<server.port>/`.
+
 ### Tài khoản mẫu trên profile dev
 
 Mở `http://localhost:8080/login` và nhập email cùng mật khẩu mẫu `TalentLinkDev2026!`. MySQL lưu hash BCrypt có salt riêng cho từng tài khoản. Chỉ dùng bộ dữ liệu và mật khẩu mẫu trên database phát triển.
