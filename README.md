@@ -104,3 +104,8 @@ Gọi fragment `fragments/layout :: page` với tiêu đề tab và phần nội
 Dùng `BusinessRuleException` khi thao tác vi phạm quy tắc nghiệp vụ và `ResourceNotFoundException` khi bản ghi không tồn tại. `GlobalExceptionHandler` hiển thị trang tương ứng với HTTP 422, 404 hoặc 403 cho lỗi quyền truy cập. Spring Boot dùng các trang lỗi chung cho lỗi được chuyển qua `/error`, gồm lỗi 500. Nội dung trang lỗi dùng thông báo cố định dành cho người dùng.
 
 Khi một thao tác cần chuyển hướng, gọi `redirectAttributes.addFlashAttribute("successMessage", "Đã lưu thay đổi.")` hoặc dùng `errorMessage` cho lỗi, rồi trả về `redirect:` đến trang đích. Layout hiển thị thông báo ở lần mở trang đó. Đăng xuất và đăng nhập thất bại đã dùng cơ chế này.
+
+### File minh chứng chứng chỉ
+
+Đặt `CERTIFICATE_UPLOAD_DIR` trỏ tới thư mục lưu trữ bền vững ngoài thư mục tài nguyên web.
+Mặc định ứng dụng dùng `./uploads/certificates`. Khi sao lưu hồ sơ, lưu cả thư mục này cùng cơ sở dữ liệu.
