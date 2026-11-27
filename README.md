@@ -52,6 +52,12 @@ Mỗi tài khoản được chuyển tới trang chủ theo quyền sau khi đă
 
 Tùy chọn **Giữ đăng nhập** có hiệu lực 14 ngày. Đặt biến môi trường `TALENTLINK_REMEMBER_ME_KEY` bằng một giá trị ngẫu nhiên riêng nếu cần giữ hiệu lực cookie qua lần khởi động lại. Khi biến này trống, Spring Security tạo khóa mới khi ứng dụng khởi động. Đăng xuất kết thúc phiên và xóa cookie ghi nhớ trong trình duyệt.
 
+### Đăng ký sinh viên
+
+Mở `http://localhost:8080/register` để tạo tài khoản sinh viên. Mật khẩu cần ít nhất 8 ký tự và tối đa 72 byte UTF-8. Khi biểu mẫu có lỗi, ứng dụng giữ họ tên và email, rồi yêu cầu nhập lại mật khẩu. Sau khi đăng ký, người dùng được chuyển về trang đăng nhập.
+
+Migration V3 bổ sung `profiles.visibility` với giá trị mặc định `PRIVATE`. Tài khoản sinh viên mới và hồ sơ riêng tư chỉ chứa họ tên được tạo trong cùng một giao dịch.
+
 ## Quy ước làm việc nhóm
 
 - Đặt tên nhánh `feature/<tên-task>`. Khi task có mã, dùng dạng `feature/<mã-task-viết-thường>-<tên-ngắn>`, ví dụ `feature/t4e791f-bootstrap-talentlink`.

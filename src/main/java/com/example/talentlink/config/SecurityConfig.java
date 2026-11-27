@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers("/css/talentlink.css", "/webjars/bootstrap/**").permitAll()
                         .requestMatchers("/me", "/me/**", "/candidate", "/candidate/**").hasRole("STUDENT")
                         .requestMatchers("/partner", "/partner/**", "/recruiter", "/recruiter/**").hasRole("PARTNER")
