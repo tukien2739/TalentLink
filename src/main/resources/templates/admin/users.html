@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Quản trị tài khoản · TalentLink', ~{::#accounts-content})}">
+<body>
+<section id="accounts-content" aria-labelledby="accounts-title">
+    <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h2 mb-1" id="accounts-title">Quản trị tài khoản</h1>
+            <p class="text-body-secondary mb-0" th:text="|${accounts.total} tài khoản|"></p>
+        </div>
+        <a class="btn btn-brand" th:href="@{/admin/users/new}">Tạo tài khoản đối tác</a>
+    </div>
+    <form class="card p-3 mb-4" th:action="@{/admin/users}" method="get" aria-label="Tìm và lọc tài khoản">
+        <div class="row g-3 align-items-end">
+            <div class="col-12 col-lg">
+                <label class="form-label" for="query">Tên hoặc email</label>
+                <input type="search" class="form-control" name="q" id="query" th:value="${query}"
+                       placeholder="Nhập tên hoặc email">
+            </div>
+            <div class="col-6 col-lg-2">
+                <label class="form-label" for="role">Vai trò</label>
+                <select class="form-select" name="role" id="role">
+                    <option value="">Tất cả</option>
+                    <option th:each="choice : ${roles}" th:value="${choice}" th:text="${choice.label}"
+                            th:selected="${choice == filterRole}"></option>
+                </select>
+            </div>
+            <div class="col-6 col-lg-2">
+                <label class="form-label" for="state">Trạng thái</label>
+                <select class="form-select" name="state" id="state">
+                    <option value="">Tất cả</option>
+                    <option th:each="choice : ${states}" th:value="${choice}" th:text="${choice.label}"
+                            th:selected="${choice == filterState}"></option>
+                </select>
+            </div>
+            <div class="col-12 col-lg-auto d-flex flex-wrap gap-2">
+                <button class="btn btn-brand" type="submit">Áp dụng</button>
+                <a class="btn btn-outline-brand" th:href="@{/admin/users}">Xóa bộ lọc</a>
+            </div>
+        </div>
+    </form>
+    <p class="alert alert-info" role="status" th:if="${accounts.total == 0}">Không tìm thấy tài khoản phù hợp.</p>
+    <div class="card table-responsive mb-3" th:if="${accounts.total > 0}">
+        <table class="table table-hover align-middle mb-0">
+            <caption class="visually-hidden">Danh sách tài khoản</caption>
+            <thead class="table-light">
+            <tr>
+                <th scope="col">Họ tên / Email</th>
+                <th scope="col" class="d-none d-md-table-cell">Vai trò</th>
+                <th scope="col" class="d-none d-md-table-cell">Công ty</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account : ${accounts.rows}" th:attr="data-account-id=${account.id}">
+                <td class="text-break">
+                    <div class="fw-semibold" th:if="${account.displayName != null}" th:text="${account.displayName}"></div>
+                    <div class="small" th:text="${account.email}"></div>
+                    <div class="small text-body-secondary d-md-none">
+                        <span th:text="${account.role.label}"></span>
+                        <span th:if="${account.company != null}" th:text="| · ${account.company}|"></span>
+                    </div>
+                </td>
+                <td class="d-none d-md-table-cell" th:text="${account.role.label}"></td>
+                <td class="d-none d-md-table-cell" th:text="${account.company ?: '—'}"></td>
+                <td>
+                    <span class="badge" th:classappend="${account.locked ? 'text-bg-secondary' : 'text-bg-success'}"
+                          th:text="${account.locked ? 'Đã khóa' : 'Hoạt động'}"></span>
+                </td>
+                <td>
+                    <span class="small text-body-secondary" th:if="${account.email == currentEmail}">Bạn</span>
+                    <a class="btn btn-sm btn-outline-brand text-nowrap" th:unless="${account.email == currentEmail}"
+                       th:href="@{/admin/users/{id}/status(id=${account.id},locked=${!account.locked})}"
+                       th:text="${account.locked ? 'Mở khóa' : 'Khóa'}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Phân trang tài khoản" class="d-flex align-items-center gap-3" th:if="${accounts.lastPage > 1}">
+        <a class="btn btn-sm btn-outline-brand" rel="prev" th:if="${accounts.number > 1}"
+           th:href="@{/admin/users(q=${query},role=${filterRole},state=${filterState},page=${accounts.number - 1})}">Trước</a>
+        <span class="small text-body-secondary" th:text="|Trang ${accounts.number} / ${accounts.lastPage}|"></span>
+        <a class="btn btn-sm btn-outline-brand" rel="next" th:if="${accounts.number < accounts.lastPage}"
+           th:href="@{/admin/users(q=${query},role=${filterRole},state=${filterState},page=${accounts.number + 1})}">Sau</a>
+    </nav>
+</section>
+</body>
+</html>
