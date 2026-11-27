@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section class="error-panel mx-auto p-4 p-md-5" th:fragment="message(code, heading, description)"
+         aria-labelledby="error-heading">
+    <p class="error-code small fw-semibold mb-2" th:text="${code}"></p>
+    <h1 class="h2 mb-3" id="error-heading" th:text="${heading}"></h1>
+    <p class="mb-4" th:text="${description}"></p>
+    <a class="btn btn-brand" th:href="@{/}">Về trang chủ</a>
+</section>
+</body>
+</html>

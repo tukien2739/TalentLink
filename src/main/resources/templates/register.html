@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Đăng ký sinh viên · TalentLink', ~{::#register-content})}">
+<body>
+<section id="register-content" class="auth-panel mx-auto p-4 p-md-5" aria-labelledby="register-title">
+    <h1 class="h2 mb-4" id="register-title">Đăng ký sinh viên</h1>
+    <form th:action="@{/register}" th:object="${registration}" method="post" class="d-grid gap-3" novalidate>
+        <div>
+            <label for="fullName" class="form-label">Họ và tên</label>
+            <input class="form-control" type="text" th:field="*{fullName}" th:errorclass="is-invalid"
+                   th:attr="aria-invalid=${#fields.hasErrors('fullName')}"
+                   aria-describedby="full-name-error" autocomplete="name" maxlength="150" required>
+            <div id="full-name-error" class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
+                 th:errors="*{fullName}"></div>
+        </div>
+        <div>
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control" type="email" th:field="*{email}" th:errorclass="is-invalid"
+                   th:attr="aria-invalid=${#fields.hasErrors('email')}"
+                   aria-describedby="email-error" autocomplete="email" maxlength="254" required>
+            <div id="email-error" class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                 th:errors="*{email}"></div>
+        </div>
+        <div>
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input class="form-control" id="password" name="password" type="password"
+                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                   th:attr="aria-invalid=${#fields.hasErrors('password')}"
+                   aria-describedby="password-help password-error" autocomplete="new-password" required>
+            <div id="password-help" class="form-text">Ít nhất 8 ký tự, tối đa 72 byte UTF-8.</div>
+            <div id="password-error" class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}"></div>
+        </div>
+        <div>
+            <label for="passwordConfirmation" class="form-label">Nhập lại mật khẩu</label>
+            <input class="form-control" id="passwordConfirmation" name="passwordConfirmation" type="password"
+                   th:classappend="${#fields.hasErrors('passwordConfirmation')} ? 'is-invalid' : ''"
+                   th:attr="aria-invalid=${#fields.hasErrors('passwordConfirmation')}"
+                   aria-describedby="password-confirmation-error" autocomplete="new-password" required>
+            <div id="password-confirmation-error" class="invalid-feedback"
+                 th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></div>
+        </div>
+        <button class="btn btn-brand mt-1" type="submit">Tạo tài khoản</button>
+        <p class="small mb-0">Đã có tài khoản? <a th:href="@{/login}">Đăng nhập</a></p>
+    </form>
+</section>
+</body>
+</html>
