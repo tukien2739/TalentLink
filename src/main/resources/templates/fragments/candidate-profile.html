@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="vstack gap-3 text-break" th:fragment="details(preview, avatarUrl)" th:object="${preview.candidate}">
+    <section class="card p-3 p-md-4">
+        <img th:if="*{hasAvatar} and ${avatarUrl != null}" th:src="${avatarUrl}" alt="Ảnh đại diện"
+             class="rounded-circle mb-3 object-fit-cover" width="96" height="96">
+        <h2 class="h4" th:text="*{fullName}"></h2>
+        <p class="fw-semibold" th:unless="*{#strings.isEmpty(headline)}" th:text="*{headline}"></p>
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Ngày sinh</dt>
+            <dd class="col-sm-8" th:text="*{birthDate} ?: 'Chưa cập nhật'"></dd>
+            <dt class="col-sm-4">Vị trí mong muốn</dt>
+            <dd class="col-sm-8" th:text="*{#strings.defaultString(desiredPosition, 'Chưa cập nhật')}"></dd>
+            <dt class="col-sm-4">Nơi làm việc mong muốn</dt>
+            <dd class="col-sm-8" th:text="*{#strings.defaultString(preferredLocation, 'Chưa cập nhật')}"></dd>
+        </dl>
+        <p class="mb-0" th:unless="*{#strings.isEmpty(summary)}" th:text="*{summary}"></p>
+    </section>
+    <section class="card p-3 p-md-4">
+        <h2 class="h5">Học vấn</h2>
+        <p class="text-body-secondary mb-0" th:if="${preview.educations.isEmpty()}">Chưa có học vấn.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0" th:each="education : ${preview.educations}" th:object="${education.form}">
+                <h3 class="h6" th:text="*{institution}"></h3>
+                <p class="mb-1" th:if="*{fieldOfStudy}" th:text="*{fieldOfStudy}"></p>
+                <p class="mb-1" th:text="|*{startDate} – *{#strings.defaultString(endDate, 'Đang học')}|"></p>
+                <p class="mb-0" th:if="*{gpa}" th:text="|GPA *{gpa}|"></p>
+            </li>
+        </ul>
+    </section>
+    <section class="card p-3 p-md-4">
+        <h2 class="h5">Kỹ năng</h2>
+        <p class="text-body-secondary mb-0" th:if="${preview.skillGroups.isEmpty()}">Chưa có kỹ năng.</p>
+        <div class="mt-2" th:each="group : ${preview.skillGroups}">
+            <h3 class="h6" th:text="${group.key.label}"></h3>
+            <ul class="list-inline mb-0">
+                <li class="list-inline-item mb-2" th:each="skill : ${group.value}">
+                    <span class="badge text-bg-light text-wrap text-start"
+                          th:text="|${skill.name} (${skill.level}/5)|"></span>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="card p-3 p-md-4">
+        <h2 class="h5">Dự án cá nhân</h2>
+        <p class="text-body-secondary mb-0" th:if="${preview.projects.isEmpty()}">Chưa có dự án.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0" th:each="project : ${preview.projects}">
+                <h3 class="h6" th:text="${project.name}"></h3>
+                <p class="mb-1" th:if="${project.projectRole}" th:text="${project.projectRole}"></p>
+                <p class="mb-1" th:if="${project.technologies}" th:text="${project.technologies}"></p>
+                <p class="mb-1" th:if="${project.description}" th:text="${project.description}"></p>
+                <a class="me-2" th:if="${project.hasGithubLink()}" th:href="${project.githubUrl}">GitHub</a>
+                <a th:if="${project.hasDemoLink()}" th:href="${project.demoUrl}">Demo</a>
+            </li>
+        </ul>
+    </section>
+    <section class="card p-3 p-md-4">
+        <h2 class="h5">Chứng chỉ</h2>
+        <p class="text-body-secondary mb-0" th:if="${preview.certificates.isEmpty()}">Chưa có chứng chỉ.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0" th:each="certificate : ${preview.certificates}">
+                <h3 class="h6" th:text="${certificate.name}"></h3>
+                <p class="mb-1" th:text="${certificate.issuer}"></p>
+                <p class="mb-1" th:text="|Ngày cấp ${certificate.issuedOn}|"></p>
+                <p class="mb-0" th:if="${certificate.expiresOn}" th:text="|Hết hạn ${certificate.expiresOn}|"></p>
+            </li>
+        </ul>
+    </section>
+</div>
+</body>
+</html>

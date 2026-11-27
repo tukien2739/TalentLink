@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Xem trước hồ sơ · TalentLink', ~{::#preview-content})}">
+<body>
+<section id="preview-content" class="col-lg-9 mx-auto" aria-labelledby="preview-title">
+    <a class="btn btn-outline-brand mb-3" th:href="@{/me/profile}">Quay về hồ sơ của tôi</a>
+    <h1 id="preview-title" class="h2">Xem trước hồ sơ</h1>
+    <p class="text-body-secondary">Thông tin hồ sơ hiển thị với đối tác tuyển dụng.</p>
+    <div th:replace="~{fragments/candidate-profile :: details(${preview}, @{/me/profile/avatar})}"></div>
+</section>
+</body>
+</html>

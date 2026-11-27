@@ -36,7 +36,9 @@
                     <a class="btn btn-outline-brand" th:href="@{/register}" sec:authorize="isAnonymous()">Đăng ký</a>
                     <a class="btn btn-brand" th:href="@{/login}" sec:authorize="isAnonymous()">Đăng nhập</a>
                     <th:block sec:authorize="isAuthenticated()">
-                        <span class="account-name" sec:authentication="name"></span>
+                        <th:block th:unless="${hideAccountName}">
+                            <span class="account-name" sec:authentication="name"></span>
+                        </th:block>
                         <a class="btn btn-outline-brand" th:href="@{/account/password}">Đổi mật khẩu</a>
                         <form th:action="@{/logout}" method="post" class="m-0">
                             <button class="btn btn-outline-brand" type="submit">Đăng xuất</button>
