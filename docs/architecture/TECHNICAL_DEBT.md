@@ -5,7 +5,7 @@ Mở task riêng khi điều phối chốt phạm vi và người phụ trách. 
 | Thứ tự | Phạm vi task | Điều kiện hoàn thành |
 |---|---|---|
 | Đã xử lý trên Sprint 2 | SEC-01, bỏ OTP và email khỏi log. Reset local cần opt-in, loopback và hộp thư riêng. | Regression kiểm tra quyền tệp, đầu ra log và vòng đời OTP. Giao mã ngoài local cần task riêng trước khi mở tính năng ở môi trường đó. |
-| P0 trước triển khai có HTTP/2 | DEP-01, rà soát ingress, vá dependency riêng | Có phiên bản đã đối chiếu advisory và kết quả regression sau cập nhật. |
+| Đã xử lý trên Sprint 2 | DEP-01, đồng bộ Tomcat nhúng lên 10.1.62 bằng thuộc tính BOM của Boot 3.5.16. | Apache vá CVE-2026-86350 ở 10.1.60 và CVE-2026-101356 ở 10.1.61. Repository không bật HTTP/2, Boot mặc định tắt. Xác minh cấu hình ingress ở môi trường triển khai khi có. |
 | P1 | SEC-02, vòng đời phiên tài khoản | Có chính sách thu hồi và test phiên đang mở, remember-me và khóa tài khoản. |
 | P1 | SEC-03, kiểm soát tài nguyên avatar | Kiểm tra giới hạn ảnh và định dạng hợp lệ. |
 | P2 | SEC-04, ranh giới storage chứng chỉ | Kiểm tra khóa và đường dẫn trên dữ liệu mẫu cũ và mới. |
@@ -14,3 +14,5 @@ Mở task riêng khi điều phối chốt phạm vi và người phụ trách. 
 | P2 | ARC-01, UX-01 | Điều chỉnh khi chạm đúng capability, giữ hợp đồng HTTP và kiểm tra hai profile đăng nhập. |
 
 Lịch rà soát phụ thuộc theo [tiêu chuẩn bảo mật](SECURITY_STANDARDS.md) cần dựa trên artifact thực tế. Các mục chưa đóng tiếp tục được theo dõi trong backlog.
+
+Nguồn DEP-01: [cảnh báo Tomcat 10](https://tomcat.apache.org/security-10.html) và [thuộc tính quản lý phiên bản của Spring Boot](https://docs.spring.io/spring-boot/3.5/appendix/dependency-versions/properties.html).
