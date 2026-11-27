@@ -1,20 +1,27 @@
 package com.example.talentlink.validation;
 
-import com.example.talentlink.service.StudentRegistrationService;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import org.springframework.jdbc.core.simple.JdbcClient;
+
 public class AvailableEmailValidator implements ConstraintValidator<AvailableEmail, String> {
 
-    private final StudentRegistrationService registration;
+    private final JdbcClient jdbc;
 
-    public AvailableEmailValidator(StudentRegistrationService registration) {
-        this.registration = registration;
+    public AvailableEmailValidator(JdbcClient jdbc) {
+        this.jdbc = jdbc;
     }
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        return email == null || email.isBlank() || email.length() > 254 || !registration.emailExists(email);
+        if (email == null || email.isBlank() || email.length() > 254) {
+            return true;
+        }
+        return jdbc.sql("SELECT 1 FROM users WHERE email = :email")
+                .param("email", email)
+                .query(Integer.class)
+                .optional()
+                .isEmpty();
     }
 }

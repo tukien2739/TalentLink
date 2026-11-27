@@ -22,14 +22,6 @@ public class StudentRegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean emailExists(String email) {
-        return jdbc.sql("SELECT 1 FROM users WHERE email = :email")
-                .param("email", email)
-                .query(Integer.class)
-                .optional()
-                .isPresent();
-    }
-
     @Transactional
     public void register(StudentRegistrationForm form) {
         var userKey = new GeneratedKeyHolder();

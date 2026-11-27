@@ -45,9 +45,8 @@ public class NavigationController {
     }
 
     @GetMapping("/admin")
-    public String admin(Model model) {
-        model.addAttribute("workspaceTitle", "Khu vực quản trị");
-        return "workspace";
+    public String admin() {
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/candidate")

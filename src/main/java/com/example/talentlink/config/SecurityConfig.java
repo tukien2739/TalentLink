@@ -19,13 +19,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserDetailsService users,
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserDetailsService users, JdbcClient jdbc,
             @Value("${TALENTLINK_REMEMBER_ME_KEY:}") String rememberMeKey) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
@@ -53,6 +54,7 @@ public class SecurityConfig {
                 })
                 .httpBasic(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessUrl("/?logout"))
+                .addFilterAfter(new LockedAccountFilter(jdbc), RememberMeAuthenticationFilter.class)
                 .build();
     }
 

@@ -64,6 +64,12 @@ Sau khi đăng nhập, chọn **Đổi mật khẩu** trên thanh điều hướ
 
 Trên profile `dev`, chọn **Quên mật khẩu?** ở trang đăng nhập, nhập email rồi tìm dòng `Dev password reset OTP` trong log của ứng dụng. Nhập mã sáu số và mật khẩu mới ở trang đặt lại. Migration V4 lưu hash của OTP trong MySQL. Mã hết hạn sau 10 phút, bị hủy sau 5 lần nhập sai và chỉ dùng được một lần. Có thể yêu cầu mã mới sau 60 giây. Thông báo gửi mã giống nhau cho mọi email. Luồng này ghi OTP vào log phát triển và chỉ được bật trên profile `dev`.
 
+### Quản trị tài khoản
+
+Đăng nhập bằng tài khoản `ADMIN`, rồi mở `/admin/users`. Danh sách hiển thị tối đa 10 tài khoản mỗi trang và lọc được theo tên hoặc email, vai trò và trạng thái khóa. Khi tạo đối tác, nhập tên người dùng, email, mật khẩu ban đầu và tên công ty. Ứng dụng tạo công ty và tài khoản trong cùng một giao dịch. V5 bổ sung tên hiển thị của tài khoản.
+
+Khóa hoặc mở khóa cần xác nhận trên trang riêng. Quản trị viên không thể tự khóa. Một tài khoản bị khóa sẽ mất phiên đang dùng ở lần truy cập trang tiếp theo và chỉ đăng nhập lại được sau khi mở khóa.
+
 ## Quy ước làm việc nhóm
 
 - Đặt tên nhánh `feature/<tên-task>`. Khi task có mã, dùng dạng `feature/<mã-task-viết-thường>-<tên-ngắn>`, ví dụ `feature/t4e791f-bootstrap-talentlink`.

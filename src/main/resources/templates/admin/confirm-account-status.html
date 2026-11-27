@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Xác nhận trạng thái tài khoản · TalentLink', ~{::#status-content})}">
+<body>
+<section id="status-content" class="auth-panel mx-auto p-4 p-md-5" aria-labelledby="status-title">
+    <h1 class="h3 mb-3" id="status-title" th:text="${locked ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}"></h1>
+    <p class="text-break mb-4">
+        <span th:text="${locked ? 'Xác nhận khóa' : 'Xác nhận mở khóa'}"></span>
+        <strong th:text="${target.email}"></strong>?
+    </p>
+    <form th:action="@{/admin/users/{id}/status(id=${target.id})}" method="post" class="d-flex flex-wrap gap-2">
+        <input type="hidden" name="locked" th:value="${locked}">
+        <a class="btn btn-outline-brand" th:href="@{/admin/users}">Hủy</a>
+        <button class="btn" th:classappend="${locked ? 'btn-danger' : 'btn-brand'}" type="submit"
+                th:text="${locked ? 'Xác nhận khóa' : 'Xác nhận mở khóa'}"></button>
+    </form>
+</section>
+</body>
+</html>
