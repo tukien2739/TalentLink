@@ -58,6 +58,12 @@ Mở `http://localhost:8080/register` để tạo tài khoản sinh viên. Mật
 
 Migration V3 bổ sung `profiles.visibility` với giá trị mặc định `PRIVATE`. Tài khoản sinh viên mới và hồ sơ riêng tư chỉ chứa họ tên được tạo trong cùng một giao dịch.
 
+### Đổi và đặt lại mật khẩu
+
+Sau khi đăng nhập, chọn **Đổi mật khẩu** trên thanh điều hướng. Cần nhập đúng mật khẩu hiện tại. Sau khi đổi, ứng dụng kết thúc phiên hiện tại và yêu cầu đăng nhập lại.
+
+Trên profile `dev`, chọn **Quên mật khẩu?** ở trang đăng nhập, nhập email rồi tìm dòng `Dev password reset OTP` trong log của ứng dụng. Nhập mã sáu số và mật khẩu mới ở trang đặt lại. Migration V4 lưu hash của OTP trong MySQL. Mã hết hạn sau 10 phút, bị hủy sau 5 lần nhập sai và chỉ dùng được một lần. Có thể yêu cầu mã mới sau 60 giây. Thông báo gửi mã giống nhau cho mọi email. Luồng này ghi OTP vào log phát triển và chỉ được bật trên profile `dev`.
+
 ## Quy ước làm việc nhóm
 
 - Đặt tên nhánh `feature/<tên-task>`. Khi task có mã, dùng dạng `feature/<mã-task-viết-thường>-<tên-ngắn>`, ví dụ `feature/t4e791f-bootstrap-talentlink`.

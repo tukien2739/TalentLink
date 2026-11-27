@@ -3,6 +3,7 @@ package com.example.talentlink.dto;
 import java.util.Locale;
 
 import com.example.talentlink.validation.AvailableEmail;
+import com.example.talentlink.validation.BcryptLength;
 import com.example.talentlink.validation.ValidRegistrationPasswords;
 
 import jakarta.validation.constraints.Email;
@@ -23,6 +24,7 @@ public record StudentRegistrationForm(
 
         @NotBlank(message = "Nhập mật khẩu.")
         @Size(min = 8, message = "Mật khẩu cần ít nhất 8 ký tự.")
+        @BcryptLength
         String password,
 
         @NotBlank(message = "Nhập lại mật khẩu.")
