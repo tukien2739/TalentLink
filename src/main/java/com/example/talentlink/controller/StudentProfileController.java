@@ -5,6 +5,7 @@ import com.example.talentlink.dto.StudentSkillForm;
 import com.example.talentlink.repository.SkillRepository;
 import com.example.talentlink.repository.StudentSkillRepository.RatedSkill;
 import com.example.talentlink.repository.StudentSkillRepository;
+import com.example.talentlink.service.ProfileCompletionService;
 import com.example.talentlink.service.StudentAvatarService;
 import com.example.talentlink.service.StudentEducationService;
 import com.example.talentlink.service.StudentProfileService;
@@ -42,15 +43,17 @@ public class StudentProfileController {
 
     private final StudentAvatarService avatars;
     private final StudentEducationService educations;
+    private final ProfileCompletionService completion;
 
     public StudentProfileController(StudentProfileService profiles, SkillRepository catalog,
             StudentSkillRepository skills, StudentAvatarService avatars,
-            StudentEducationService educations) {
+            StudentEducationService educations, ProfileCompletionService completion) {
         this.profiles = profiles;
         this.catalog = catalog;
         this.skills = skills;
         this.avatars = avatars;
         this.educations = educations;
+        this.completion = completion;
     }
 
     @GetMapping("/me/profile/avatar")
@@ -88,10 +91,14 @@ public class StudentProfileController {
                 : new String(Character.toChars(name.codePointAt(0))).toUpperCase(Locale.ROOT));
     }
 
-    private String showProfile(Principal principal, Model model, String fullName) {
-        populateAvatar(principal, model, fullName);
-        model.addAttribute("educations", educations.listOwn(principal.getName()));
-        model.addAttribute("skillGroups", skills.findOwn(principal.getName()).stream()
+    private String showProfile(Principal principal, Model model, StudentProfileForm savedProfile) {
+        String email = principal.getName();
+        populateAvatar(principal, model, savedProfile.fullName());
+        var ownEducation = educations.listOwn(email);
+        var ownSkills = skills.findOwn(email);
+        model.addAttribute("profileCompletion", completion.forOwner(email, savedProfile, ownEducation, ownSkills));
+        model.addAttribute("educations", ownEducation);
+        model.addAttribute("skillGroups", ownSkills.stream()
                 .collect(Collectors.groupingBy(RatedSkill::category, LinkedHashMap::new, Collectors.toList())));
         model.addAttribute("skillCatalog", catalog.findVisible());
         model.addAttribute("skillLevels", List.of(
@@ -108,7 +115,7 @@ public class StudentProfileController {
         StudentProfileForm profile = profiles.findOwnProfile(principal.getName());
         model.addAttribute("profileForm", profile);
         model.addAttribute("skillForm", new StudentSkillForm(null, null));
-        return showProfile(principal, model, profile.fullName());
+        return showProfile(principal, model, profile);
     }
 
     @PostMapping("/me/profile")
@@ -116,7 +123,7 @@ public class StudentProfileController {
             Principal principal, Model model, RedirectAttributes redirect) {
         if (errors.hasErrors()) {
             model.addAttribute("skillForm", new StudentSkillForm(null, null));
-            return showProfile(principal, model, profiles.findOwnProfile(principal.getName()).fullName());
+            return showProfile(principal, model, profiles.findOwnProfile(principal.getName()));
         }
         profiles.updateOwnProfile(principal.getName(), form);
         redirect.addFlashAttribute("successMessage", "Đã lưu hồ sơ của bạn.");
@@ -139,7 +146,7 @@ public class StudentProfileController {
         }
         StudentProfileForm profile = profiles.findOwnProfile(principal.getName());
         model.addAttribute("profileForm", profile);
-        return showProfile(principal, model, profile.fullName());
+        return showProfile(principal, model, profile);
     }
 
     @PostMapping("/me/profile/skills/{skillId}/remove")
