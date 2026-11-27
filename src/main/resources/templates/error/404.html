@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Không tìm thấy trang · TalentLink', ~{::#error-content})}">
+<body>
+<th:block id="error-content"
+          th:replace="~{fragments/error-message :: message('404', 'Không tìm thấy trang',
+          'Có thể trang đã được di chuyển hoặc địa chỉ không còn đúng. Bạn có thể quay về trang chủ.')}"></th:block>
+</body>
+</html>

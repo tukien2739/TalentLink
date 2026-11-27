@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Không thể hoàn tất thao tác · TalentLink', ~{::#error-content})}">
+<body>
+<th:block id="error-content"
+          th:replace="~{fragments/error-message :: message('422', 'Không thể hoàn tất thao tác',
+          'Thao tác chưa đáp ứng điều kiện hiện tại. Hãy kiểm tra thông tin và thử lại.')}"></th:block>
+</body>
+</html>

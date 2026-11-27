@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Đăng nhập · TalentLink', ~{::#login-content})}">
+<body>
+<section id="login-content" class="auth-panel mx-auto p-4 p-md-5" aria-labelledby="login-title">
+    <h1 class="h2 mb-4" id="login-title">Đăng nhập</h1>
+    <form th:action="@{/login}" method="post" class="d-grid gap-3">
+        <div>
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control" id="email" name="email" type="email" autocomplete="username" required>
+        </div>
+        <div>
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input class="form-control" id="password" name="password" type="password"
+                   autocomplete="current-password" required>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox">
+            <label class="form-check-label" for="remember-me">Giữ đăng nhập</label>
+        </div>
+        <button class="btn btn-brand mt-1" type="submit">Đăng nhập</button>
+        <p class="small mb-0" th:if="${@environment.matchesProfiles('dev')}">
+            <a th:href="@{/forgot-password}">Quên mật khẩu?</a>
+        </p>
+        <p class="small mb-0">Chưa có tài khoản? <a th:href="@{/register}">Đăng ký sinh viên</a></p>
+    </form>
+</section>
+</body>
+</html>

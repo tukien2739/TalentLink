@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header class="site-header" th:fragment="siteHeader">
+    <nav class="navbar navbar-expand-md" aria-label="Điều hướng chính">
+        <div class="container">
+            <a class="navbar-brand brand d-inline-flex align-items-center gap-2" th:href="@{/}">
+                <span class="brand-mark" aria-hidden="true">TL</span>
+                <span>TalentLink</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-nav"
+                    aria-controls="site-nav" aria-expanded="false" aria-label="Hiện hoặc ẩn điều hướng">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="site-nav">
+                <ul class="navbar-nav me-auto gap-md-2">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
+                    <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                        <a class="nav-link" th:href="@{/me}">Khu vực sinh viên</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('PARTNER')">
+                        <a class="nav-link" th:href="@{/partner}">Khu vực đối tác tuyển dụng</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/users}">Quản trị tài khoản</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/skills}">Quản trị kỹ năng</a>
+                    </li>
+                </ul>
+                <div class="account-actions d-flex align-items-md-center flex-column flex-md-row gap-2 gap-md-3">
+                    <a class="btn btn-outline-brand" th:href="@{/register}" sec:authorize="isAnonymous()">Đăng ký</a>
+                    <a class="btn btn-brand" th:href="@{/login}" sec:authorize="isAnonymous()">Đăng nhập</a>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <span class="account-name" sec:authentication="name"></span>
+                        <a class="btn btn-outline-brand" th:href="@{/account/password}">Đổi mật khẩu</a>
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button class="btn btn-outline-brand" type="submit">Đăng xuất</button>
+                        </form>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>
