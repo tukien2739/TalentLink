@@ -27,6 +27,7 @@
                     </li>
                 </ul>
                 <div class="account-actions d-flex align-items-md-center flex-column flex-md-row gap-2 gap-md-3">
+                    <a class="btn btn-outline-brand" th:href="@{/register}" sec:authorize="isAnonymous()">Đăng ký</a>
                     <a class="btn btn-brand" th:href="@{/login}" sec:authorize="isAnonymous()">Đăng nhập</a>
                     <th:block sec:authorize="isAuthenticated()">
                         <span class="account-name" sec:authentication="name"></span>
