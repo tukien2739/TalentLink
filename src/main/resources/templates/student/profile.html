@@ -4,6 +4,25 @@
 <body>
 <section id="profile-content" class="col-lg-9 mx-auto" aria-labelledby="profile-title">
     <h1 class="h2 mb-4" id="profile-title">Hồ sơ của tôi</h1>
+    <form id="avatar" class="card p-3 p-md-4 mb-3" th:action="@{/me/profile/avatar}"
+          method="post" enctype="multipart/form-data">
+        <label for="avatar-file" class="form-label fw-semibold">Ảnh đại diện</label>
+        <div class="mb-3">
+            <span th:unless="${hasAvatar}" id="avatar-default"
+                  class="rounded-circle bg-light border d-inline-flex align-items-center justify-content-center fs-2"
+                  style="width: 96px; height: 96px" th:text="${avatarInitial}"></span>
+            <img id="avatar-image" th:src="${hasAvatar} ? @{/me/profile/avatar} : null"
+                 th:hidden="${!hasAvatar}" alt="Ảnh đại diện" class="rounded-circle"
+                 width="96" height="96" style="object-fit: cover">
+        </div>
+        <input id="avatar-file" name="avatar" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+               class="form-control" th:classappend="${avatarError != null} ? 'is-invalid'"
+               aria-describedby="avatar-help avatar-error" required>
+        <div id="avatar-help" class="form-text">JPG hoặc PNG, tối đa 2 MB.</div>
+        <div id="avatar-error" class="invalid-feedback" aria-live="polite" th:text="${avatarError}"></div>
+        <div class="mt-3"><button class="btn btn-brand" type="submit">Lưu ảnh đại diện</button></div>
+    </form>
+    <script th:src="@{/js/student-avatar.js}" defer></script>
     <form th:action="@{/me/profile}" th:object="${profileForm}" method="post" novalidate>
         <fieldset class="card p-3 p-md-4 mb-3">
             <legend class="h5 float-none w-auto mb-2">Thông tin cá nhân</legend>
