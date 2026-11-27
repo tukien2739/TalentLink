@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Hồ sơ của tôi · TalentLink', ~{::#profile-content})}">
+<body>
+<section id="profile-content" class="col-lg-9 mx-auto" aria-labelledby="profile-title">
+    <h1 class="h2 mb-4" id="profile-title">Hồ sơ của tôi</h1>
+    <form th:action="@{/me/profile}" th:object="${profileForm}" method="post" novalidate>
+        <fieldset class="card p-3 p-md-4 mb-3">
+            <legend class="h5 float-none w-auto mb-2">Thông tin cá nhân</legend>
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label" for="fullName">Họ và tên</label>
+                    <input type="text" class="form-control" th:field="*{fullName}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('fullName')}"
+                           aria-describedby="fullName-error" autocomplete="name" maxlength="150" required>
+                    <div class="invalid-feedback" id="fullName-error" th:if="${#fields.hasErrors('fullName')}"
+                         th:errors="*{fullName}"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label" for="birthDate">Ngày sinh</label>
+                    <input type="text" class="form-control" th:field="*{birthDate}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('birthDate')}"
+                           aria-describedby="birthDate-help birthDate-error" autocomplete="bday" placeholder="2003-04-26">
+                    <div id="birthDate-help" class="form-text">Định dạng YYYY-MM-DD.</div>
+                    <div class="invalid-feedback" id="birthDate-error" th:if="${#fields.hasErrors('birthDate')}"
+                         th:errors="*{birthDate}"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label" for="phone">Số điện thoại</label>
+                    <input type="tel" class="form-control" th:field="*{phone}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('phone')}"
+                           aria-describedby="phone-help phone-error" autocomplete="tel" maxlength="16" placeholder="0912345678">
+                    <div id="phone-help" class="form-text">Ví dụ 0912345678 hoặc +84912345678.</div>
+                    <div class="invalid-feedback" id="phone-error" th:if="${#fields.hasErrors('phone')}"
+                         th:errors="*{phone}"></div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="card p-3 p-md-4 mb-3">
+            <legend class="h5 float-none w-auto mb-2">Mục tiêu nghề nghiệp</legend>
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label" for="desiredPosition">Vị trí mong muốn</label>
+                    <input type="text" class="form-control" th:field="*{desiredPosition}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('desiredPosition')}"
+                           aria-describedby="desiredPosition-error" maxlength="150">
+                    <div class="invalid-feedback" id="desiredPosition-error" th:if="${#fields.hasErrors('desiredPosition')}"
+                         th:errors="*{desiredPosition}"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label" for="preferredLocation">Nơi làm việc mong muốn</label>
+                    <input type="text" class="form-control" th:field="*{preferredLocation}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('preferredLocation')}"
+                           aria-describedby="preferredLocation-error" maxlength="150">
+                    <div class="invalid-feedback" id="preferredLocation-error" th:if="${#fields.hasErrors('preferredLocation')}"
+                         th:errors="*{preferredLocation}"></div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="summary">Giới thiệu bản thân</label>
+                    <textarea class="form-control" th:field="*{summary}" th:errorclass="is-invalid"
+                           th:attr="aria-invalid=${#fields.hasErrors('summary')}"
+                           aria-describedby="summary-error" rows="5" maxlength="16000"></textarea>
+                    <div class="invalid-feedback" id="summary-error" th:if="${#fields.hasErrors('summary')}"
+                         th:errors="*{summary}"></div>
+                </div>
+            </div>
+        </fieldset>
+        <button class="btn btn-brand" type="submit">Lưu hồ sơ</button>
+    </form>
+</section>
+</body>
+</html>
