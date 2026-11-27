@@ -70,6 +70,10 @@ Trên profile `dev`, chọn **Quên mật khẩu?** ở trang đăng nhập, nh�
 
 Khóa hoặc mở khóa cần xác nhận trên trang riêng. Quản trị viên không thể tự khóa. Một tài khoản bị khóa sẽ mất phiên đang dùng ở lần truy cập trang tiếp theo và chỉ đăng nhập lại được sau khi mở khóa.
 
+### Hồ sơ sinh viên
+
+Sinh viên đăng nhập rồi mở `/me/profile` để xem và cập nhật hồ sơ của mình. Họ tên là trường bắt buộc. Ngày sinh dùng định dạng `YYYY-MM-DD`. Số điện thoại nhận 10 chữ số bắt đầu bằng `0` hoặc định dạng quốc tế bắt đầu bằng `+`. V6 bổ sung ngày sinh, số điện thoại, vị trí và nơi làm việc mong muốn cho bảng `profiles`.
+
 ## Quy ước làm việc nhóm
 
 - Đặt tên nhánh `feature/<tên-task>`. Khi task có mã, dùng dạng `feature/<mã-task-viết-thường>-<tên-ngắn>`, ví dụ `feature/t4e791f-bootstrap-talentlink`.
