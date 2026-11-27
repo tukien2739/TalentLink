@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page(${educationId != null} ? 'Sửa học vấn · TalentLink' : 'Thêm học vấn · TalentLink', ~{::#education-content})}">
+<body>
+<section id="education-content" class="auth-panel mx-auto p-4 p-md-5" aria-labelledby="education-form-title"
+         th:with="editing=${educationId != null}">
+    <h1 class="h2 mb-4" id="education-form-title" th:text="${editing ? 'Sửa học vấn' : 'Thêm học vấn'}">Thêm học vấn</h1>
+    <form th:action="${editing} ? @{/me/profile/educations/{id}/edit(id=${educationId})} : @{/me/profile/educations/new}"
+          th:object="${educationForm}" method="post" class="d-grid gap-3" novalidate>
+        <div>
+            <label for="institution" class="form-label">Trường</label>
+            <input type="text" class="form-control" th:field="*{institution}" th:errorclass="is-invalid"
+                   maxlength="200" required aria-describedby="institution-error">
+            <div class="invalid-feedback" id="institution-error" th:errors="*{institution}"></div>
+        </div>
+        <div>
+            <label for="fieldOfStudy" class="form-label">Chuyên ngành</label>
+            <input type="text" class="form-control" th:field="*{fieldOfStudy}" th:errorclass="is-invalid"
+                   maxlength="150" required aria-describedby="fieldOfStudy-error">
+            <div class="invalid-feedback" id="fieldOfStudy-error" th:errors="*{fieldOfStudy}"></div>
+        </div>
+        <div class="row g-3">
+            <div class="col-12 col-sm-6">
+                <label for="startDate" class="form-label">Từ ngày</label>
+                <input type="text" class="form-control" th:field="*{startDate}" th:errorclass="is-invalid"
+                       placeholder="YYYY-MM-DD" required aria-describedby="startDate-error">
+                <div class="invalid-feedback" id="startDate-error" th:errors="*{startDate}"></div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <label for="endDate" class="form-label">Đến ngày</label>
+                <input type="text" class="form-control" th:field="*{endDate}" th:errorclass="is-invalid"
+                       placeholder="YYYY-MM-DD" aria-describedby="endDate-error endDate-hint">
+                <div class="invalid-feedback" id="endDate-error" th:errors="*{endDate}"></div>
+                <div class="form-text" id="endDate-hint">Bỏ trống nếu đang học.</div>
+            </div>
+        </div>
+        <div>
+            <label for="gpa" class="form-label">GPA <span class="text-body-secondary">(tùy chọn)</span></label>
+            <input type="text" inputmode="decimal" class="form-control" th:field="*{gpa}" th:errorclass="is-invalid"
+                   placeholder="3,5" aria-describedby="gpa-error gpa-hint">
+            <div class="invalid-feedback" id="gpa-error" th:errors="*{gpa}"></div>
+            <div class="form-text" id="gpa-hint">Thang điểm 0–4.</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-outline-brand" th:href="@{/me/profile#education}">Hủy</a>
+            <button class="btn btn-brand" type="submit">Lưu học vấn</button>
+        </div>
+    </form>
+</section>
+</body>
+</html>

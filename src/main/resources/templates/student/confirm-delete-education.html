@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: page('Xóa học vấn · TalentLink', ~{::#delete-content})}">
+<body>
+<section id="delete-content" class="auth-panel mx-auto p-4 p-md-5" aria-labelledby="delete-title">
+    <h1 class="h2 mb-3" id="delete-title">Xóa học vấn</h1>
+    <p class="mb-4 text-break">Bạn có muốn xóa mục học vấn tại <strong th:text="${education.form.institution}"></strong>?</p>
+    <form th:action="@{/me/profile/educations/{id}/delete(id=${education.id})}" method="post" class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-brand" th:href="@{/me/profile#education}">Hủy</a>
+        <button class="btn btn-danger" type="submit">Xác nhận xóa</button>
+    </form>
+</section>
+</body>
+</html>

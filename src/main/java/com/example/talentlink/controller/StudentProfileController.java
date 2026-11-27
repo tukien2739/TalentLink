@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.util.Locale;
 
 import com.example.talentlink.dto.StudentProfileForm;
+import com.example.talentlink.service.StudentEducationService;
 import com.example.talentlink.service.StudentProfileService;
 import com.example.talentlink.service.StudentAvatarService;
 
@@ -29,12 +30,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class StudentProfileController {
 
     private final StudentProfileService profiles;
+    private final StudentEducationService educations;
 
     private final StudentAvatarService avatars;
 
-    public StudentProfileController(StudentProfileService profiles, StudentAvatarService avatars) {
+    public StudentProfileController(StudentProfileService profiles, StudentAvatarService avatars, StudentEducationService educations) {
         this.profiles = profiles;
         this.avatars = avatars;
+        this.educations = educations;
     }
 
     @GetMapping("/me/profile/avatar")
@@ -70,25 +73,3 @@ public class StudentProfileController {
         model.addAttribute("hasAvatar", avatars.hasAvatar(principal.getName()));
         model.addAttribute("avatarInitial", name.isEmpty() ? "?"
                 : new String(Character.toChars(name.codePointAt(0))).toUpperCase(Locale.ROOT));
-    }
-
-    @GetMapping("/me/profile")
-    public String edit(Principal principal, Model model) {
-        StudentProfileForm profile = profiles.findOwnProfile(principal.getName());
-        model.addAttribute("profileForm", profile);
-        populateAvatar(principal, model, profile.fullName());
-        return "student/profile";
-    }
-
-    @PostMapping("/me/profile")
-    public String update(@Valid @ModelAttribute("profileForm") StudentProfileForm form, BindingResult errors,
-            Principal principal, Model model, RedirectAttributes redirect) {
-        if (errors.hasErrors()) {
-            populateAvatar(principal, model, profiles.findOwnProfile(principal.getName()).fullName());
-            return "student/profile";
-        }
-        profiles.updateOwnProfile(principal.getName(), form);
-        redirect.addFlashAttribute("successMessage", "Đã lưu hồ sơ của bạn.");
-        return "redirect:/me/profile";
-    }
-}
