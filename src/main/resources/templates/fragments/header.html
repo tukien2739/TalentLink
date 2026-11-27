@@ -19,6 +19,9 @@
                     <li class="nav-item" sec:authorize="hasRole('STUDENT')">
                         <a class="nav-link" th:href="@{/me}">Khu vực sinh viên</a>
                     </li>
+                    <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                        <a class="nav-link" th:href="@{/me/profile}">Hồ sơ của tôi</a>
+                    </li>
                     <li class="nav-item" sec:authorize="hasRole('PARTNER')">
                         <a class="nav-link" th:href="@{/partner}">Khu vực đối tác tuyển dụng</a>
                     </li>
